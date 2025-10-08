@@ -15,9 +15,9 @@
     "link": "https://amazon.com"
   },
   {
-    "name": "ChatGPT",
-    "img": "https://no.uglisounds.se/assets/imgs/sb/ChatGPT.webp",
-    "link": "https://chatgpt.com"
+    "name": "DuckDuckGo",
+    "img": "https://duckduckgo.com/assets/icons/meta/DDG-iOS-icon_152x152.png",
+    "link": "https://duckduckgo.com"
   },
   {
     "name": "YouTube",
@@ -25,18 +25,18 @@
     "link": "https://youtube.com"
   },
   {
-    "name": "Discord",
-    "img": "https://no.uglisounds.se/assets/imgs/sb/Discord.webp",
-    "link": "https://discord.com/login"
-  },
-  {
-    "name": "Twitch",
-    "img": "https://no.uglisounds.se/assets/imgs/sb/Twitch.webp",
+    "name": "Reddit",
+    "img": "https://www.redditinc.com/assets/images/site/reddit-logo.png",
     "link": "https://reddit.com"
   },
   {
-    "name": "GitHub",
-    "img": "https://no.uglisounds.se/assets/imgs/sb/GitHub.webp",
-    "link": "https://github.com"
+    "name": "Wikipedia",
+    "img": "https://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo.png",
+    "link": "https://wikipedia.org"
+  },
+  {
+    "name": "IMDb",
+    "img": "https://m.media-amazon.com/images/G/01/IMDb/BG_icon_192x192.png",
+    "link": "https://imdb.com"
   }
 ]
