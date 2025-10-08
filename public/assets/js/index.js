@@ -29,6 +29,9 @@ async function launch(val) {
         .then((registration) => {
           console.log("ServiceWorker registration successful with scope: ", registration.scope);
           let url = val.trim();
+          const defaultModel = localStorage.getItem('ai:model') || 'gpt-5-mini';
+          // store default model for /ai page
+          localStorage.setItem('ai:model', defaultModel);
           if (typeof ifUrl === "function" && !ifUrl(url)) {
             url = search(url);
           } else if (!(url.startsWith("https://") || url.startsWith("http://"))) {

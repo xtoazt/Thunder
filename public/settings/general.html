@@ -36,12 +36,45 @@
         
         <div class="settingsContainer">
             <div class="sidebar">
-                <a>General</a>
-                <a>Proxy</a>
-                <a>Appearance</a>
+                <a href="#general">General</a>
+                <a href="#proxy">Proxy</a>
+                <a href="#appearance">Appearance</a>
+                <a href="#ai">AI</a>
             </div>
 
             <div class="content">
+              <section id="general">
+                <h2>General</h2>
+                <label>
+                  Homepage Title
+                  <input id="opt-title" type="text" placeholder="Ambient" />
+                </label>
+              </section>
+              <section id="proxy">
+                <h2>Proxy</h2>
+                <label>
+                  Browse Mode
+                  <select id="opt-browse">
+                    <option value="go">Open in Tab</option>
+                    <option value="norm">Open Direct</option>
+                  </select>
+                </label>
+              </section>
+              <section id="appearance">
+                <h2>Appearance</h2>
+                <label>
+                  Theme Accent (hex)
+                  <input id="opt-accent" type="text" placeholder="#b578ff" />
+                </label>
+              </section>
+              <section id="ai">
+                <h2>AI</h2>
+                <label>
+                  Default Model
+                  <input id="opt-ai-model" type="text" placeholder="gpt-5-mini" />
+                </label>
+                <p class="small">The API key is stored server-side. This only sets a default client model.</p>
+              </section>
             </div>
         </div>
     </div>
