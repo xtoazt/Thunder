@@ -63,6 +63,14 @@
               <section id="appearance">
                 <h2>Appearance</h2>
                 <label>
+                  Theme
+                  <select id="opt-theme">
+                    <option value="theme-dark">Dark</option>
+                    <option value="theme-light">Light</option>
+                    <option value="theme-premium">Premium</option>
+                  </select>
+                </label>
+                <label>
                   Theme Accent (hex)
                   <input id="opt-accent" type="text" placeholder="#b578ff" />
                 </label>
@@ -94,6 +102,7 @@
       const aiModelEl = document.getElementById('opt-ai-model');
       const fontEl = document.getElementById('opt-font');
       const bgEl = document.getElementById('opt-bg');
+      const themeEl = document.getElementById('opt-theme');
 
       // Load
       try {
@@ -103,6 +112,7 @@
         aiModelEl.value = localStorage.getItem('ai:model') || 'gpt-5-mini';
         fontEl.value = localStorage.getItem('ui:font') || '';
         bgEl.value = localStorage.getItem('ui:bg') || '';
+        themeEl.value = localStorage.getItem('ui:theme') || 'theme-dark';
       } catch {}
 
       const save = () => {
@@ -113,10 +123,11 @@
           if (aiModelEl.value) localStorage.setItem('ai:model', aiModelEl.value);
           if (fontEl.value) localStorage.setItem('ui:font', fontEl.value);
           if (bgEl.value) localStorage.setItem('ui:bg', bgEl.value);
+          if (themeEl.value) localStorage.setItem('ui:theme', themeEl.value);
           alert('Saved');
         } catch {}
       };
-      [titleEl, accentEl, browseEl, aiModelEl, fontEl, bgEl].forEach(el => el && el.addEventListener('change', save));
+      [titleEl, accentEl, browseEl, aiModelEl, fontEl, bgEl, themeEl].forEach(el => el && el.addEventListener('change', save));
     </script>
     <!-- DO NOT REMOVE -->
     <script src="https://unpkg.com/lucide@latest"></script>

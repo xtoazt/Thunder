@@ -1,27 +1,26 @@
 (async () => {
   try {
-    let response = await fetch('/assets/js/json/shortcuts.json');
-    let shortcuts = await response.json();
     const shortcutsContain = document.getElementById('shortcutsContain');
-
-    shortcuts.sort((a, b) => a.name.localeCompare(b.name));
-
-    shortcuts.forEach((shortcut) => {
+    if (!shortcutsContain) return;
+    // Use games.json and only render items with valid thumbnails
+    const response = await fetch('/assets/js/json/games.json');
+    const list = await response.json();
+    let added = 0;
+    const max = 12;
+    for (const g of list) {
+      if (added >= max) break;
+      if (!g?.img || !g?.link) continue;
       const shortcutDiv = document.createElement('div');
       shortcutDiv.className = 'shortcut';
-      shortcutDiv.onclick = () => {
-        launch(shortcut.link);
-      };
-
+      shortcutDiv.onclick = () => { launch(g.link); };
       const img = document.createElement('img');
-      img.src = shortcut.img;
-      img.alt = shortcut.name;
-      img.title = shortcut.name;
-
+      img.src = g.img; img.alt = g.name || 'game'; img.title = g.name || 'game'; img.loading = 'lazy';
+      img.addEventListener('error', () => shortcutDiv.remove());
+      img.addEventListener('load', () => { if (!shortcutDiv.isConnected) shortcutsContain.appendChild(shortcutDiv); });
       shortcutDiv.appendChild(img);
-      shortcutsContain.appendChild(shortcutDiv);
-    });
+      added++;
+    }
   } catch (error) {
-    console.error('Error fetching shortcuts:', error);
+    console.error('Error building shortcuts:', error);
   }
 })();

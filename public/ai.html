@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="assets/css/nav.css" />
     <style>
       .ai-wrap { max-width: 900px; margin: 0 auto; padding: 24px; }
-      .row { display: flex; gap: 8px; align-items: center; }
+      .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
       select, input, button, textarea { background: #111318; color: #e5e7eb; border: 1px solid #23262f; border-radius: 10px; padding: 10px 12px; }
       textarea { width: 100%; min-height: 120px; resize: vertical; }
       .chat { margin-top: 16px; border: 1px solid #23262f; border-radius: 12px; padding: 12px; background: #0b0d12; max-height: 60vh; overflow: auto; }
@@ -21,6 +21,8 @@
       .msg.ai { color: #b6c2ff; }
       .msg:last-child { border-bottom: 0; }
       .small { color: #9aa3b2; font-size: 12px; }
+      .pill { padding: 4px 8px; border: 1px solid #23262f; border-radius: 999px; background: #0f1218; color: #cbd5e1; cursor: pointer; }
+      .pill.active { background: var(--accent, #b578ff); color: #0b0d12; border-color: transparent; }
     </style>
   </head>
   <body>
@@ -43,6 +45,11 @@
           <button id="clear">Clear</button>
         </div>
         <div class="small" style="margin-top:6px">Chat is sent through your server via /api/ai/chat. API key is kept server-side.</div>
+        <div class="row" style="margin-top:8px">
+          <div id="style-compact" class="pill">Compact</div>
+          <div id="style-cozy" class="pill active">Cozy</div>
+          <div id="style-readable" class="pill">Readable</div>
+        </div>
         <div class="chat" id="chat"></div>
         <div style="margin-top:10px">
           <textarea id="input" placeholder="Type your message... (Shift+Enter for newline)"></textarea>
@@ -82,6 +89,8 @@
             const o = document.createElement('option');
             o.value = m.id; o.textContent = m.id; modelEl.appendChild(o);
           });
+          const def = localStorage.getItem('ai:model');
+          if (def) modelEl.value = def;
         } catch {}
       }
 
@@ -110,6 +119,23 @@
       inputEl.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
       });
+
+      // Style toggles
+      const pills = {
+        compact: document.getElementById('style-compact'),
+        cozy: document.getElementById('style-cozy'),
+        readable: document.getElementById('style-readable'),
+      };
+      const setStyle = (k) => {
+        localStorage.setItem('ai:style', k);
+        Object.values(pills).forEach(x => x.classList.remove('active'));
+        pills[k]?.classList.add('active');
+        if (k === 'compact') chatEl.style.lineHeight = '1.2';
+        if (k === 'cozy') chatEl.style.lineHeight = '1.5';
+        if (k === 'readable') chatEl.style.lineHeight = '1.8';
+      };
+      Object.entries(pills).forEach(([k, el]) => el?.addEventListener('click', () => setStyle(k)));
+      setStyle(localStorage.getItem('ai:style') || 'cozy');
 
       loadModels();
     </script>

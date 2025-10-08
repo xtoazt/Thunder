@@ -30,5 +30,10 @@ try {
   if (font) document.documentElement.style.setProperty('--font', font);
   const bg = localStorage.getItem('ui:bg');
   if (bg) document.documentElement.style.setProperty('--bg', bg);
+  const theme = localStorage.getItem('ui:theme');
+  if (theme) {
+    document.documentElement.classList.remove('theme-dark','theme-light','theme-premium');
+    document.documentElement.classList.add(theme);
+  }
 } catch {}
 lucide.create();
