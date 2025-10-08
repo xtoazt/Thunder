@@ -34,7 +34,7 @@
           <a href="/ai">AI</a>
           <a href="/settings">Settings</a>
         </div>
-        <i data-lucide="settings"></i>
+        <a href="/settings" aria-label="Settings"><i data-lucide="settings"></i></a>
       </nav>
       <div class="news">
         <i data-lucide=""></i>
@@ -70,16 +70,41 @@
     <script src="/search/config.js"></script>
     <!-- DO NOT REMOVE -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      .upgrade-overlay { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); z-index: 1000; }
+      .upgrade-card { width: min(520px, 92vw); border: 1px solid #23262f; border-radius: 12px; background: #0b0d12; color: #e5e7eb; box-shadow: 0 10px 40px rgba(0,0,0,0.4); padding: 18px; }
+      .upgrade-card h3 { margin: 0 0 8px 0; font-size: 20px; }
+      .upgrade-card p { margin: 0 0 12px 0; color: #b3b8c5; }
+      .upgrade-actions { display: flex; gap: 8px; justify-content: flex-end; }
+      .btn { background: #111318; border: 1px solid #23262f; color: #e5e7eb; border-radius: 10px; padding: 8px 12px; cursor: pointer; }
+      .btn.primary { background: var(--accent, #b578ff); border-color: transparent; color: #0b0d12; }
+    </style>
+    <div id="upgrade-overlay" class="upgrade-overlay">
+      <div class="upgrade-card">
+        <h3>Thundr just got an upgrade!</h3>
+        <p>Hundreds of new games, and a brand new UI.</p>
+        <div class="upgrade-actions">
+          <button id="upgrade-close" class="btn">Close</button>
+          <a href="/g" id="upgrade-go" class="btn primary">Browse Games</a>
+        </div>
+      </div>
+    </div>
     <script>
       lucide.createIcons();
     </script>
     <!-- DO NOT REMOVE -->
     <script>
-      // First-visit popup
+      // First-visit popup (onscreen)
       try {
+        const ov = document.getElementById('upgrade-overlay');
+        const closeBtn = document.getElementById('upgrade-close');
+        const show = () => { ov.style.display = 'flex'; };
+        const hide = () => { ov.style.display = 'none'; };
         if (!localStorage.getItem('thundr:firstvisit')) {
-          alert('Thundr just got an upgrade! Hundreds of new games, and a brand new UI');
-          localStorage.setItem('thundr:firstvisit', '1');
+          show();
+          closeBtn?.addEventListener('click', () => { localStorage.setItem('thundr:firstvisit', '1'); hide(); });
+          document.getElementById('upgrade-go')?.addEventListener('click', () => { localStorage.setItem('thundr:firstvisit', '1'); });
+          ov?.addEventListener('click', (e) => { if (e.target === ov) { localStorage.setItem('thundr:firstvisit', '1'); hide(); } });
         }
       } catch {}
 
