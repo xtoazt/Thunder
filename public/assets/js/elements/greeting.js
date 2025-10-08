@@ -20,4 +20,15 @@ function getGreeting(name) {
 const name = 'User';
 const { greetingMessage, icon } = getGreeting(name);
 document.getElementById('greeting').innerHTML = `<i data-lucide="${icon}"></i><span>${greetingMessage}</span>`;
+// Apply UI customization live
+try {
+  const accent = localStorage.getItem('ui:accent');
+  if (accent) document.documentElement.style.setProperty('--accent', accent);
+  const title = localStorage.getItem('ui:title');
+  if (title) document.title = title;
+  const font = localStorage.getItem('ui:font');
+  if (font) document.documentElement.style.setProperty('--font', font);
+  const bg = localStorage.getItem('ui:bg');
+  if (bg) document.documentElement.style.setProperty('--bg', bg);
+} catch {}
 lucide.create();

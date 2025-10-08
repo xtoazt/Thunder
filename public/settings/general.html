@@ -66,6 +66,14 @@
                   Theme Accent (hex)
                   <input id="opt-accent" type="text" placeholder="#b578ff" />
                 </label>
+                <label>
+                  Font (CSS font-family)
+                  <input id="opt-font" type="text" placeholder="'Questrial', sans-serif" />
+                </label>
+                <label>
+                  Background (CSS)
+                  <input id="opt-bg" type="text" placeholder="radial-gradient(1200px_500px_at_0%_0%,#1a1d27 10%,transparent 40%), #0b0d12" />
+                </label>
               </section>
               <section id="ai">
                 <h2>AI</h2>
@@ -84,6 +92,8 @@
       const accentEl = document.getElementById('opt-accent');
       const browseEl = document.getElementById('opt-browse');
       const aiModelEl = document.getElementById('opt-ai-model');
+      const fontEl = document.getElementById('opt-font');
+      const bgEl = document.getElementById('opt-bg');
 
       // Load
       try {
@@ -91,6 +101,8 @@
         accentEl.value = localStorage.getItem('ui:accent') || '';
         browseEl.value = localStorage.getItem('browse') || 'go';
         aiModelEl.value = localStorage.getItem('ai:model') || 'gpt-5-mini';
+        fontEl.value = localStorage.getItem('ui:font') || '';
+        bgEl.value = localStorage.getItem('ui:bg') || '';
       } catch {}
 
       const save = () => {
@@ -99,10 +111,12 @@
           if (accentEl.value) localStorage.setItem('ui:accent', accentEl.value);
           if (browseEl.value) localStorage.setItem('browse', browseEl.value);
           if (aiModelEl.value) localStorage.setItem('ai:model', aiModelEl.value);
+          if (fontEl.value) localStorage.setItem('ui:font', fontEl.value);
+          if (bgEl.value) localStorage.setItem('ui:bg', bgEl.value);
           alert('Saved');
         } catch {}
       };
-      [titleEl, accentEl, browseEl, aiModelEl].forEach(el => el && el.addEventListener('change', save));
+      [titleEl, accentEl, browseEl, aiModelEl, fontEl, bgEl].forEach(el => el && el.addEventListener('change', save));
     </script>
     <!-- DO NOT REMOVE -->
     <script src="https://unpkg.com/lucide@latest"></script>

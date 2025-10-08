@@ -8,6 +8,22 @@ body {
   top: 0;
 }
 
+/* Animations */
+:root {
+  --anim-duration: 300ms;
+  --anim-ease: cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeInUp { animation: fadeInUp var(--anim-duration) var(--anim-ease) both; }
+.animate-delay-1 { animation-delay: .06s; }
+.animate-delay-2 { animation-delay: .12s; }
+.animate-delay-3 { animation-delay: .18s; }
+
 * {
   font-family: var(--font);
 }
@@ -28,6 +44,9 @@ body {
   margin: 0;
   color: var(--text);
 }
+
+.searchbarContainer, .shortcutsContain, footer { transition: transform var(--anim-duration) var(--anim-ease), opacity var(--anim-duration) var(--anim-ease); }
+.searchbarContainer:hover { transform: translateY(-2px); }
 
 footer {
   position: relative;
