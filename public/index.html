@@ -57,6 +57,8 @@
         <a href="https://github.com/xnoctra/Ambient" target="_blank">GitHub</a>
         <span>\</span>
         <a href="https://discord.gg/5hETqnGc3e">Discord</a>
+        <span>\</span>
+        <span>Credits: built by rohan</span>
       </footer>
     </div>
     <script src="assets/js/index.js"></script>
@@ -73,6 +75,14 @@
     </script>
     <!-- DO NOT REMOVE -->
     <script>
+      // First-visit popup
+      try {
+        if (!localStorage.getItem('thundr:firstvisit')) {
+          alert('Thundr just got an upgrade! Hundreds of new games, and a brand new UI');
+          localStorage.setItem('thundr:firstvisit', '1');
+        }
+      } catch {}
+
       const form = document.getElementById('uv-form');
       const address = document.getElementById('searchbar');
       const searchEngine = document.getElementById('uv-search-engine');
@@ -135,6 +145,13 @@
           .register(swFile, { scope: swConfigSettings.prefix })
           .then((registration) => {
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            // Apply simple customisation
+            try {
+              const accent = localStorage.getItem('ui:accent');
+              if (accent) document.documentElement.style.setProperty('--accent', accent);
+              const title = localStorage.getItem('ui:title');
+              if (title) document.title = title;
+            } catch {}
             form.addEventListener('submit', async (event) => {
               event.preventDefault();
               let encodedUrl = swConfigSettings.prefix + crypts.encode(search(address.value));

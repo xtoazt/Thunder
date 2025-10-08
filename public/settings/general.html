@@ -78,7 +78,32 @@
             </div>
         </div>
     </div>
-    <script src="assets/js/index.js"></script>
+    <script>
+      // Persist settings to localStorage
+      const titleEl = document.getElementById('opt-title');
+      const accentEl = document.getElementById('opt-accent');
+      const browseEl = document.getElementById('opt-browse');
+      const aiModelEl = document.getElementById('opt-ai-model');
+
+      // Load
+      try {
+        titleEl.value = localStorage.getItem('ui:title') || '';
+        accentEl.value = localStorage.getItem('ui:accent') || '';
+        browseEl.value = localStorage.getItem('browse') || 'go';
+        aiModelEl.value = localStorage.getItem('ai:model') || 'gpt-5-mini';
+      } catch {}
+
+      const save = () => {
+        try {
+          if (titleEl.value) localStorage.setItem('ui:title', titleEl.value);
+          if (accentEl.value) localStorage.setItem('ui:accent', accentEl.value);
+          if (browseEl.value) localStorage.setItem('browse', browseEl.value);
+          if (aiModelEl.value) localStorage.setItem('ai:model', aiModelEl.value);
+          alert('Saved');
+        } catch {}
+      };
+      [titleEl, accentEl, browseEl, aiModelEl].forEach(el => el && el.addEventListener('change', save));
+    </script>
     <!-- DO NOT REMOVE -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
