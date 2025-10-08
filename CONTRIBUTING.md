@@ -1,5 +1,5 @@
-# Contributors of Ambient
-Below are the contributors of Ambient and their respective contributions.
+# Contributors of Thundr
+Below are the contributors of Thundr and their respective contributions.
 
 ## Noctra (@xnoctra)
 - Owner & Maintainer

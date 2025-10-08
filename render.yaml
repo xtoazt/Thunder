@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: ambient
+    name: thundr
     env: node
     buildCommand: npm install
     startCommand: npm start
@@ -10,6 +10,6 @@ services:
     autoDeploy: true
     healthCheckPath: /
     disk:
-      name: ambient-data
+      name: thundr-data
       mountPath: /data
       sizeGB: 1

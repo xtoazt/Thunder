@@ -114,7 +114,7 @@ server.on("listening", () => {
   const theme = chalk.hex("#b578ff");
   const host = chalk.hex("b578ff");
 
-  console.log(`Listening to ${chalk.bold(theme("Ambient"))} on:`);
+  console.log(`Listening to ${chalk.bold(theme("Thundr"))} on:`);
 
   console.log(
     `  ${chalk.bold(host("Local System:"))}            http://${address.family === "IPv6" ? `[${address.address}]` : address.address}${address.port === 80 ? "" : ":" + chalk.bold(address.port)}`,

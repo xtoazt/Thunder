@@ -7,7 +7,7 @@ We support the following versions with security updates:
 | V1      |     ✔    |
 
 ## Reporting a Vulnerability
-Report a security vulnerability [here](https://github.com/xnoctra/Ambient/security/advisories/new)
+Report a security vulnerability [here](https://github.com/xnoctra/Thundr/security/advisories/new)
 
 If you discover a security vulnerability, please report it privately. You can contact us via Discord [here](https://discord.gg/5hETqnGc3e). 
 
