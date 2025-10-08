@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const root = process.cwd();
 const gamesJsonPath = path.join(root, 'public/assets/js/json/games.json');
-const gamesJsPath = path.join(root, 'games.js');
+const gamesJsPath = path.join(root, 'games-source.html');
 
 function extractLessonsArray(jsText) {
   // Extract the lessonsData array literal from games.js

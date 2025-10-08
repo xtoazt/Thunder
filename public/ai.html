@@ -1,145 +1,211 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="Ambient | AI" />
-    <meta name="description" content="Chat with multiple models via LLM7" />
-    <link rel="icon" type="image/x-icon" href="assets/imgs/logo.png" />
-    <title>Ambient | AI</title>
-    <link rel="stylesheet" href="assets/css/global.css" />
-    <link rel="stylesheet" href="assets/css/theme/default.css" />
-    <link rel="stylesheet" href="assets/css/nav.css" />
-    <style>
-      .ai-wrap { max-width: 900px; margin: 0 auto; padding: 24px; }
-      .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-      select, input, button, textarea { background: #111318; color: #e5e7eb; border: 1px solid #23262f; border-radius: 10px; padding: 10px 12px; }
-      textarea { width: 100%; min-height: 120px; resize: vertical; }
-      .chat { margin-top: 16px; border: 1px solid #23262f; border-radius: 12px; padding: 12px; background: #0b0d12; max-height: 60vh; overflow: auto; }
-      .msg { padding: 10px 12px; border-bottom: 1px solid #1b1e26; white-space: pre-wrap; }
-      .msg.me { color: #d1d5db; }
-      .msg.ai { color: #b6c2ff; }
-      .msg:last-child { border-bottom: 0; }
-      .small { color: #9aa3b2; font-size: 12px; }
-      .pill { padding: 4px 8px; border: 1px solid #23262f; border-radius: 999px; background: #0f1218; color: #cbd5e1; cursor: pointer; }
-      .pill.active { background: var(--accent, #b578ff); color: #0b0d12; border-color: transparent; }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <nav>
-        <img src="assets/imgs/logo.png" alt="logo" />
-        <div class="flex">
-          <a href="/">Home</a>
-          <a href="/g">Games</a>
-          <a href="/a">Apps</a>
-          <a href="/ai">AI</a>
-          <a href="/settings">Settings</a>
-        </div>
-        <i data-lucide="settings"></i>
-      </nav>
-      <div class="ai-wrap">
-        <div class="row">
-          <select id="model"></select>
-          <input id="temp" type="number" step="0.1" min="0" max="2" value="0.7" style="width:120px" />
-          <button id="clear">Clear</button>
-        </div>
-        <div class="small" style="margin-top:6px">Chat is sent through your server via /api/ai/chat. API key is kept server-side.</div>
-        <div class="row" style="margin-top:8px">
-          <div id="style-compact" class="pill">Compact</div>
-          <div id="style-cozy" class="pill active">Cozy</div>
-          <div id="style-readable" class="pill">Readable</div>
-        </div>
-        <div class="chat" id="chat"></div>
-        <div style="margin-top:10px">
-          <textarea id="input" placeholder="Type your message... (Shift+Enter for newline)"></textarea>
-          <div class="row" style="justify-content: flex-end; margin-top: 8px">
-            <button id="send">Send</button>
-          </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="title" content="Ambient | AI" />
+  <meta name="description" content="Chat with multiple models via LLM7" />
+  <link rel="icon" type="image/x-icon" href="assets/imgs/logo.png" />
+  <title>Ambient | AI</title>
+  <link rel="stylesheet" href="assets/css/global.css" />
+  <link rel="stylesheet" href="assets/css/theme/default.css" />
+  <link rel="stylesheet" href="assets/css/nav.css" />
+  <style>
+    .ai-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    select,
+    input,
+    button,
+    textarea {
+      background: #111318;
+      color: #e5e7eb;
+      border: 1px solid #23262f;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .chat {
+      margin-top: 16px;
+      border: 1px solid #23262f;
+      border-radius: 12px;
+      padding: 12px;
+      background: #0b0d12;
+      max-height: 60vh;
+      overflow: auto;
+    }
+
+    .msg {
+      padding: 10px 12px;
+      border-bottom: 1px solid #1b1e26;
+      white-space: pre-wrap;
+    }
+
+    .msg.me {
+      color: #d1d5db;
+    }
+
+    .msg.ai {
+      color: #b6c2ff;
+    }
+
+    .msg:last-child {
+      border-bottom: 0;
+    }
+
+    .small {
+      color: #9aa3b2;
+      font-size: 12px;
+    }
+
+    .pill {
+      padding: 4px 8px;
+      border: 1px solid #23262f;
+      border-radius: 999px;
+      background: #0f1218;
+      color: #cbd5e1;
+      cursor: pointer;
+    }
+
+    .pill.active {
+      background: var(--accent, #b578ff);
+      color: #0b0d12;
+      border-color: transparent;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <nav>
+      <img src="assets/imgs/logo.png" alt="logo" />
+      <div class="flex">
+        <a href="/">Home</a>
+        <a href="/g">Games</a>
+        <a href="/a">Apps</a>
+        <a href="/ai">AI</a>
+        <a href="/settings">Settings</a>
+      </div>
+    </nav>
+    <div class="ai-wrap">
+      <div class="row">
+        <select id="model"></select>
+        <input id="temp" type="number" step="0.1" min="0" max="2" value="0.7" style="width:120px" />
+        <button id="clear">Clear</button>
+      </div>
+      <div class="small" style="margin-top:6px">Chat is sent through your server via /api/ai/chat. API key is kept
+        server-side.</div>
+      <div class="row" style="margin-top:8px">
+        <div id="style-compact" class="pill">Compact</div>
+        <div id="style-cozy" class="pill active">Cozy</div>
+        <div id="style-readable" class="pill">Readable</div>
+      </div>
+      <div class="chat" id="chat"></div>
+      <div style="margin-top:10px">
+        <textarea id="input" placeholder="Type your message... (Shift+Enter for newline)"></textarea>
+        <div class="row" style="justify-content: flex-end; margin-top: 8px">
+          <button id="send">Send</button>
         </div>
       </div>
     </div>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-      lucide.createIcons();
-      const chatEl = document.getElementById('chat');
-      const inputEl = document.getElementById('input');
-      const modelEl = document.getElementById('model');
-      const tempEl = document.getElementById('temp');
-      const sendBtn = document.getElementById('send');
-      const clearBtn = document.getElementById('clear');
+  </div>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+    const chatEl = document.getElementById('chat');
+    const inputEl = document.getElementById('input');
+    const modelEl = document.getElementById('model');
+    const tempEl = document.getElementById('temp');
+    const sendBtn = document.getElementById('send');
+    const clearBtn = document.getElementById('clear');
 
-      const messages = [];
+    const messages = [];
 
-      function add(role, content) {
-        messages.push({ role, content });
-        const d = document.createElement('div');
-        d.className = 'msg ' + (role === 'user' ? 'me' : 'ai');
-        d.textContent = (role === 'user' ? 'You: ' : 'AI: ') + content;
-        chatEl.appendChild(d);
-        chatEl.scrollTop = chatEl.scrollHeight;
-      }
+    function add(role, content) {
+      messages.push({ role, content });
+      const d = document.createElement('div');
+      d.className = 'msg ' + (role === 'user' ? 'me' : 'ai');
+      d.textContent = (role === 'user' ? 'You: ' : 'AI: ') + content;
+      chatEl.appendChild(d);
+      chatEl.scrollTop = chatEl.scrollHeight;
+    }
 
-      async function loadModels() {
-        try {
-          const r = await fetch('/api/ai/models');
-          const data = await r.json();
-          modelEl.innerHTML = '';
-          data.forEach(m => {
-            const o = document.createElement('option');
-            o.value = m.id; o.textContent = m.id; modelEl.appendChild(o);
-          });
-          const def = localStorage.getItem('ai:model');
-          if (def) modelEl.value = def;
-        } catch {}
-      }
+    async function loadModels() {
+      try {
+        const r = await fetch('/api/ai/models');
+        const data = await r.json();
+        modelEl.innerHTML = '';
+        data.forEach(m => {
+          const o = document.createElement('option');
+          o.value = m.id; o.textContent = m.id; modelEl.appendChild(o);
+        });
+        const def = localStorage.getItem('ai:model');
+        if (def) modelEl.value = def;
+      } catch { }
+    }
 
-      async function send() {
-        const t = inputEl.value.trim();
-        if (!t) return;
-        add('user', t);
-        inputEl.value = '';
-        const payload = {
-          model: modelEl.value,
-          messages: messages.map(m => ({ role: m.role, content: m.content })),
-          temperature: Number(tempEl.value || 0.7)
-        };
-        try {
-          const r = await fetch('/api/ai/chat', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
-          const data = await r.json();
-          const text = data?.choices?.[0]?.message?.content || data?.error || 'No response';
-          add('assistant', text);
-        } catch {
-          add('assistant', 'Request failed');
-        }
-      }
-
-      sendBtn.onclick = send;
-      clearBtn.onclick = () => { messages.length = 0; chatEl.innerHTML = ''; };
-      inputEl.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
-      });
-
-      // Style toggles
-      const pills = {
-        compact: document.getElementById('style-compact'),
-        cozy: document.getElementById('style-cozy'),
-        readable: document.getElementById('style-readable'),
+    async function send() {
+      const t = inputEl.value.trim();
+      if (!t) return;
+      add('user', t);
+      inputEl.value = '';
+      const payload = {
+        model: modelEl.value,
+        messages: messages.map(m => ({ role: m.role, content: m.content })),
+        temperature: Number(tempEl.value || 0.7)
       };
-      const setStyle = (k) => {
-        localStorage.setItem('ai:style', k);
-        Object.values(pills).forEach(x => x.classList.remove('active'));
-        pills[k]?.classList.add('active');
-        if (k === 'compact') chatEl.style.lineHeight = '1.2';
-        if (k === 'cozy') chatEl.style.lineHeight = '1.5';
-        if (k === 'readable') chatEl.style.lineHeight = '1.8';
-      };
-      Object.entries(pills).forEach(([k, el]) => el?.addEventListener('click', () => setStyle(k)));
-      setStyle(localStorage.getItem('ai:style') || 'cozy');
+      try {
+        const r = await fetch('/api/ai/chat', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
+        const data = await r.json();
+        const text = data?.choices?.[0]?.message?.content || data?.error || 'No response';
+        add('assistant', text);
+      } catch {
+        add('assistant', 'Request failed');
+      }
+    }
 
-      loadModels();
-    </script>
-  </body>
-  </html>
+    sendBtn.onclick = send;
+    clearBtn.onclick = () => { messages.length = 0; chatEl.innerHTML = ''; };
+    inputEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+    });
 
+    // Style toggles
+    const pills = {
+      compact: document.getElementById('style-compact'),
+      cozy: document.getElementById('style-cozy'),
+      readable: document.getElementById('style-readable'),
+    };
+    const setStyle = (k) => {
+      localStorage.setItem('ai:style', k);
+      Object.values(pills).forEach(x => x.classList.remove('active'));
+      pills[k]?.classList.add('active');
+      if (k === 'compact') chatEl.style.lineHeight = '1.2';
+      if (k === 'cozy') chatEl.style.lineHeight = '1.5';
+      if (k === 'readable') chatEl.style.lineHeight = '1.8';
+    };
+    Object.entries(pills).forEach(([k, el]) => el?.addEventListener('click', () => setStyle(k)));
+    setStyle(localStorage.getItem('ai:style') || 'cozy');
 
+    loadModels();
+  </script>
+</body>
+
+</html>

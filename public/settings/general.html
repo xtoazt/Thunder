@@ -2,138 +2,140 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="Ambient" />
-    <meta name="description" content="The better way to browse." />
-    <link rel="icon" type="image/x-icon" href="../assets/imgs/logo.png" />
-    <title>Ambient | Settings</title>
-    <!-- Critical CSS -->
-    <link rel="stylesheet" href="../assets/css/global.css" />
-    <link rel="stylesheet" href="../assets/css/theme/default.css" />
-    <!-- Page CSS -->
-    <link rel="stylesheet" href="../assets/css/pages/settings.css" />
-    <!-- Non-critical CSS -->
-    <link rel="stylesheet" href="../assets/css/rays.css" />
-    <link rel="stylesheet" href="../assets/css/nav.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="title" content="Ambient" />
+  <meta name="description" content="The better way to browse." />
+  <link rel="icon" type="image/x-icon" href="../assets/imgs/logo.png" />
+  <title>Ambient | Settings</title>
+  <!-- Critical CSS -->
+  <link rel="stylesheet" href="../assets/css/global.css" />
+  <link rel="stylesheet" href="../assets/css/theme/default.css" />
+  <!-- Page CSS -->
+  <link rel="stylesheet" href="../assets/css/pages/settings.css" />
+  <!-- Non-critical CSS -->
+  <link rel="stylesheet" href="../assets/css/rays.css" />
+  <link rel="stylesheet" href="../assets/css/nav.css" />
 </head>
 
 <body>
-    <div class="container">
-        <div class="raysContain">
-            <div class="rays"></div>
-        </div>
-        <nav>
-            <img src="../assets/imgs/logo.png" alt="logo" />
-            <div class="flex">
-                <a href="/">Home</a>
-                <a href="/g">Games</a>
-                <a href="/a">Apps</a>
-                <a href="/ai">AI</a>
-            </div>
-            <i data-lucide="settings"></i>
-        </nav>
-        
-        <div class="settingsContainer">
-            <div class="sidebar">
-                <a href="#general">General</a>
-                <a href="#proxy">Proxy</a>
-                <a href="#appearance">Appearance</a>
-                <a href="#ai">AI</a>
-            </div>
-
-            <div class="content">
-              <section id="general">
-                <h2>General</h2>
-                <label>
-                  Homepage Title
-                  <input id="opt-title" type="text" placeholder="Ambient" />
-                </label>
-              </section>
-              <section id="proxy">
-                <h2>Proxy</h2>
-                <label>
-                  Browse Mode
-                  <select id="opt-browse">
-                    <option value="go">Open in Tab</option>
-                    <option value="norm">Open Direct</option>
-                  </select>
-                </label>
-              </section>
-              <section id="appearance">
-                <h2>Appearance</h2>
-                <label>
-                  Theme
-                  <select id="opt-theme">
-                    <option value="theme-dark">Dark</option>
-                    <option value="theme-light">Light</option>
-                    <option value="theme-premium">Premium</option>
-                  </select>
-                </label>
-                <label>
-                  Theme Accent (hex)
-                  <input id="opt-accent" type="text" placeholder="#b578ff" />
-                </label>
-                <label>
-                  Font (CSS font-family)
-                  <input id="opt-font" type="text" placeholder="'Questrial', sans-serif" />
-                </label>
-                <label>
-                  Background (CSS)
-                  <input id="opt-bg" type="text" placeholder="radial-gradient(1200px_500px_at_0%_0%,#1a1d27 10%,transparent 40%), #0b0d12" />
-                </label>
-              </section>
-              <section id="ai">
-                <h2>AI</h2>
-                <label>
-                  Default Model
-                  <input id="opt-ai-model" type="text" placeholder="gpt-5-mini" />
-                </label>
-                <p class="small">The API key is stored server-side. This only sets a default client model.</p>
-              </section>
-            </div>
-        </div>
+  <div class="container">
+    <div class="raysContain">
+      <div class="rays"></div>
     </div>
-    <script>
-      // Persist settings to localStorage
-      const titleEl = document.getElementById('opt-title');
-      const accentEl = document.getElementById('opt-accent');
-      const browseEl = document.getElementById('opt-browse');
-      const aiModelEl = document.getElementById('opt-ai-model');
-      const fontEl = document.getElementById('opt-font');
-      const bgEl = document.getElementById('opt-bg');
-      const themeEl = document.getElementById('opt-theme');
+    <nav>
+      <img src="../assets/imgs/logo.png" alt="logo" />
+      <div class="flex">
+        <a href="/">Home</a>
+        <a href="/g">Games</a>
+        <a href="/a">Apps</a>
+        <a href="/ai">AI</a>
+        <a href="/settings">Settings</a>
+      </div>
+    </nav>
 
-      // Load
+    <div class="settingsContainer">
+      <div class="sidebar">
+        <a href="#general">General</a>
+        <a href="#proxy">Proxy</a>
+        <a href="#appearance">Appearance</a>
+        <a href="#ai">AI</a>
+      </div>
+
+      <div class="content">
+        <section id="general">
+          <h2>General</h2>
+          <label>
+            Homepage Title
+            <input id="opt-title" type="text" placeholder="Ambient" />
+          </label>
+        </section>
+        <section id="proxy">
+          <h2>Proxy</h2>
+          <label>
+            Browse Mode
+            <select id="opt-browse">
+              <option value="go">Open in Tab</option>
+              <option value="norm">Open Direct</option>
+            </select>
+          </label>
+        </section>
+        <section id="appearance">
+          <h2>Appearance</h2>
+          <label>
+            Theme
+            <select id="opt-theme">
+              <option value="theme-dark">Dark</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-premium">Premium</option>
+            </select>
+          </label>
+          <label>
+            Theme Accent (hex)
+            <input id="opt-accent" type="text" placeholder="#b578ff" />
+          </label>
+          <label>
+            Font (CSS font-family)
+            <input id="opt-font" type="text" placeholder="'Questrial', sans-serif" />
+          </label>
+          <label>
+            Background (CSS)
+            <input id="opt-bg" type="text"
+              placeholder="radial-gradient(1200px_500px_at_0%_0%,#1a1d27 10%,transparent 40%), #0b0d12" />
+          </label>
+        </section>
+        <section id="ai">
+          <h2>AI</h2>
+          <label>
+            Default Model
+            <input id="opt-ai-model" type="text" placeholder="gpt-5-mini" />
+          </label>
+          <p class="small">The API key is stored server-side. This only sets a default client model.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Persist settings to localStorage
+    const titleEl = document.getElementById('opt-title');
+    const accentEl = document.getElementById('opt-accent');
+    const browseEl = document.getElementById('opt-browse');
+    const aiModelEl = document.getElementById('opt-ai-model');
+    const fontEl = document.getElementById('opt-font');
+    const bgEl = document.getElementById('opt-bg');
+    const themeEl = document.getElementById('opt-theme');
+
+    // Load
+    try {
+      titleEl.value = localStorage.getItem('ui:title') || '';
+      accentEl.value = localStorage.getItem('ui:accent') || '';
+      browseEl.value = localStorage.getItem('browse') || 'go';
+      aiModelEl.value = localStorage.getItem('ai:model') || 'gpt-5-mini';
+      fontEl.value = localStorage.getItem('ui:font') || '';
+      bgEl.value = localStorage.getItem('ui:bg') || '';
+      themeEl.value = localStorage.getItem('ui:theme') || 'theme-dark';
+    } catch { }
+
+    const save = () => {
       try {
-        titleEl.value = localStorage.getItem('ui:title') || '';
-        accentEl.value = localStorage.getItem('ui:accent') || '';
-        browseEl.value = localStorage.getItem('browse') || 'go';
-        aiModelEl.value = localStorage.getItem('ai:model') || 'gpt-5-mini';
-        fontEl.value = localStorage.getItem('ui:font') || '';
-        bgEl.value = localStorage.getItem('ui:bg') || '';
-        themeEl.value = localStorage.getItem('ui:theme') || 'theme-dark';
-      } catch {}
-
-      const save = () => {
-        try {
-          if (titleEl.value) localStorage.setItem('ui:title', titleEl.value);
-          if (accentEl.value) localStorage.setItem('ui:accent', accentEl.value);
-          if (browseEl.value) localStorage.setItem('browse', browseEl.value);
-          if (aiModelEl.value) localStorage.setItem('ai:model', aiModelEl.value);
-          if (fontEl.value) localStorage.setItem('ui:font', fontEl.value);
-          if (bgEl.value) localStorage.setItem('ui:bg', bgEl.value);
-          if (themeEl.value) localStorage.setItem('ui:theme', themeEl.value);
-          alert('Saved');
-        } catch {}
-      };
-      [titleEl, accentEl, browseEl, aiModelEl, fontEl, bgEl, themeEl].forEach(el => el && el.addEventListener('change', save));
-    </script>
-    <!-- DO NOT REMOVE -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        lucide.createIcons();
-    </script>
-    <!-- DO NOT REMOVE -->
+        if (titleEl.value) localStorage.setItem('ui:title', titleEl.value);
+        if (accentEl.value) localStorage.setItem('ui:accent', accentEl.value);
+        if (browseEl.value) localStorage.setItem('browse', browseEl.value);
+        if (aiModelEl.value) localStorage.setItem('ai:model', aiModelEl.value);
+        if (fontEl.value) localStorage.setItem('ui:font', fontEl.value);
+        if (bgEl.value) localStorage.setItem('ui:bg', bgEl.value);
+        if (themeEl.value) localStorage.setItem('ui:theme', themeEl.value);
+        alert('Saved');
+      } catch { }
+    };
+    [titleEl, accentEl, browseEl, aiModelEl, fontEl, bgEl, themeEl].forEach(el => el && el.addEventListener('change', save));
+  </script>
+  <!-- DO NOT REMOVE -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+  <!-- DO NOT REMOVE -->
 </body>
+
 </html>

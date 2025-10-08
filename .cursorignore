@@ -1,0 +1,9 @@
+# Exclude HTML data source files from linting
+games-source.html
+
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
