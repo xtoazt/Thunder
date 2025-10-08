@@ -1,28 +1,62 @@
 .pingCounter {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
   display: flex;
   align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: var(--element-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 2px solid var(--border);
+  border-radius: 50px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+  opacity: 0.8;
+}
+
+.pingCounter:hover {
+  opacity: 1;
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-h);
 }
 
 .dot {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  margin-right: 10px;
-  transition: background-color 0.3s ease;
+  background: var(--accent);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  box-shadow: 0 0 10px var(--accent-glow);
 }
 
-.dot.good {
-  background-color: rgb(102, 231, 113);
-}
-
-.dot.medium {
-  background-color: rgb(231, 190, 102);
-}
-
-.dot.poor {
-  background-color: rgb(231, 102, 102);
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
 }
 
 #pingValue {
-  color: var(--text);
+  font-family: 'Courier New', monospace;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .pingCounter {
+    bottom: 16px;
+    right: 16px;
+    font-size: 13px;
+    padding: 10px 16px;
+  }
 }

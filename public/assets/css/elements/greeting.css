@@ -1,7 +1,29 @@
 #greeting {
   color: var(--text);
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
   justify-content: center;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 12px 24px;
+  background: var(--element-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 2px solid var(--border);
+  border-radius: 50px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0.9;
+}
+
+#greeting:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-h);
+}
+
+#greeting i {
+  color: var(--accent);
+  filter: drop-shadow(0 0 8px var(--accent-glow));
 }

@@ -2,32 +2,50 @@
   position: relative;
   display: flex;
   align-items: center;
-  width: 480px;
-  height: 20px;
-  background-color: var(--bg);
-  border-radius: var(--border-radius);
-  padding: 25px 15px;
+  width: 560px;
+  max-width: 90vw;
+  height: 28px;
+  background: var(--element-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 60px;
+  padding: 28px 24px;
   box-sizing: border-box;
   outline: none;
-  border: 1px solid var(--border);
-  font-size: 18px;
+  border: 2px solid var(--border);
+  font-size: 17px;
   text-align: left;
   color: var(--text);
-  transition: 0.2s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-md);
 }
 
 .searchbarContainer:focus-within {
-  border: 1px solid var(--border-h);
-  box-shadow: 0 0 1px 2px var(--border);
-  width: 550px;
+  border: 2px solid var(--accent);
+  box-shadow: var(--shadow-accent);
+  width: 600px;
+  max-width: 92vw;
+  transform: translateY(-2px);
+  background: rgba(30, 35, 55, 0.7);
 }
 
 .searchbarContainer svg {
-  stroke: #555;
+  stroke: var(--accent);
+  opacity: 0.6;
+  width: 22px;
+  height: 22px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.searchbarContainer:focus-within svg {
+  opacity: 1;
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px var(--accent-glow));
 }
 
 #uv-form {
-  width: inherit;
+  width: 100%;
   height: inherit;
   display: flex;
   align-items: center;
@@ -35,15 +53,44 @@
 
 .searchbar {
   position: absolute;
-  font-size: 18px;
+  font-size: 17px;
   background: transparent;
   outline: none;
   border: none;
   color: inherit;
   height: 100%;
   width: 100%;
-  padding: 25px 15px 25px 50px;
+  padding: 28px 24px 28px 56px;
   left: 0;
-  border-radius: 30px;
+  border-radius: 60px;
   box-sizing: border-box;
+  font-weight: 400;
+  font-family: var(--font);
+}
+
+.searchbar::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.5;
+  font-weight: 400;
+}
+
+.searchbar:focus::placeholder {
+  opacity: 0.3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .searchbarContainer {
+    width: 90vw;
+    padding: 22px 20px;
+  }
+  
+  .searchbarContainer:focus-within {
+    width: 92vw;
+  }
+  
+  .searchbar {
+    font-size: 16px;
+    padding: 22px 20px 22px 50px;
+  }
 }

@@ -14,64 +14,97 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 30px 20px;
-  padding: 0 27px 30px 27px;
+  gap: 24px;
+  padding: 0 30px 50px 30px;
+  max-width: 1400px;
 }
 
 .game {
   position: relative;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto 1fr;
   align-items: flex-start;
-  gap: 13px;
-  background: var(--bg);
-  outline: 1px solid var(--border);
-  padding: 15px;
+  gap: 16px;
+  background: var(--element-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 2px solid var(--border);
+  padding: 20px;
   box-sizing: border-box;
-  border-radius: 10px;
-  width: 19.55em;
-  height: 12.5em;
+  border-radius: 20px;
+  width: 22em;
+  height: 13.5em;
   overflow: hidden;
-  transition: 0.2s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
   color: var(--text);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
 }
 
 .game:hover {
-  outline: 1px solid var(--border-h);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-accent);
+  transform: translateY(-6px);
+  background: var(--element-bg-hover);
+}
+
+.game::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.game:hover::before {
+  opacity: 1;
 }
 
 .game img {
-  height: 90px;
-  width: 90px;
-  border-radius: 13px;
+  height: 100px;
+  width: 100px;
+  border-radius: 16px;
+  object-fit: cover;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.game:hover img {
+  transform: scale(1.1) rotate(2deg);
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3);
 }
 
 .game .desc {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  width: 174px;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
 }
 
 .desc h2 {
-  font-size: 23px;
-  font-weight: normal;
-  margin: 8px 0 0 0;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   text-overflow: ellipsis;
+  color: var(--text);
+  line-height: 1.3;
 }
 
 .desc p {
-  font-size: 14px;
+  font-size: 13px;
   margin: 0;
-  line-height: 20px;
-  opacity: 0.5;
-  max-width: 200px;
+  line-height: 1.5;
+  opacity: 0.6;
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -83,11 +116,13 @@
   position: absolute;
   right: 0;
   text-decoration: none;
-  transition: 0.2s ease;
+  transition: all 0.3s ease;
+  color: var(--accent);
 }
 
 .desc p a:hover {
   text-decoration: underline;
+  color: var(--accent-hover);
 }
 
 .game button {
@@ -95,18 +130,50 @@
   position: relative;
   align-self: flex-end;
   width: 100%;
-  height: 35px;
-  font-size: 16px;
-  border-radius: 10px;
+  height: 42px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 12px;
   cursor: pointer;
   grid-column: 1 / 3;
-  background: none;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
   border: none;
-  outline: 1px solid var(--border);
-  background: var(--bg);
-  transition: 0.2s ease;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+  overflow: hidden;
+}
+
+.game button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.2) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .game button:hover {
-  background: var(--border);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.5);
+}
+
+.game button:hover::before {
+  opacity: 1;
+}
+
+.game button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  #gamesContain {
+    gap: 20px;
+    padding: 0 20px 50px 20px;
+  }
+  
+  .game {
+    width: 100%;
+    max-width: 400px;
+  }
 }

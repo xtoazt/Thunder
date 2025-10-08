@@ -1,5 +1,5 @@
 :root {
-  --stripe-color: #000;
+  --stripe-color: rgba(139, 92, 246, 0.03);
   --maincolor: var(--bg);
 }
 
@@ -9,7 +9,6 @@
       50% 50%,
       50% 50%;
   }
-
   to {
     background-position:
       350% 50%,
@@ -17,12 +16,19 @@
   }
 }
 
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .raysContain {
   top: 0;
   z-index: -1;
   width: 100%;
-  height: auto;
-  position: absolute;
+  height: 100%;
+  position: fixed;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 .rays {
@@ -34,7 +40,10 @@
   display: flex;
   place-content: center;
   place-items: center;
-  --solid-color: rgb(70, 70, 70);
+  
+  --solid-color-1: rgba(139, 92, 246, 0.15);
+  --solid-color-2: rgba(59, 130, 246, 0.12);
+  
   --stripes: repeating-linear-gradient(
     100deg,
     var(--stripe-color) 0%,
@@ -46,36 +55,43 @@
 
   --rainbow: repeating-linear-gradient(
     100deg,
-    var(--solid-color) 10%,
-    var(--solid-color) 15%,
-    var(--solid-color) 20%,
-    var(--solid-color) 25%,
-    var(--solid-color) 30% /* Archived Colors */
-      /* #60d9fa 10%,
-      #9579f9 15%,
-      #60a0fa 20%,
-      #b75eea 25%,
-      #60e3fa 30% */
+    var(--solid-color-1) 10%,
+    var(--solid-color-2) 15%,
+    var(--solid-color-1) 20%,
+    transparent 25%,
+    var(--solid-color-2) 30%
   );
+  
   background-image: var(--stripes), var(--rainbow);
-  background-size: 300%, 200%;
-  background-position:
-    50% 50%,
-    50% 50%;
-
-  filter: blur(10px) opacity(50%) saturate(200%);
-
-  mask-image: radial-gradient(ellipse at 100% 0%, black 40%, transparent 70%);
+  background-size: 400%, 300%;
+  background-position: 50% 50%, 50% 50%;
+  filter: blur(60px) opacity(40%) saturate(150%);
+  mask-image: radial-gradient(ellipse at 50% 0%, black 20%, transparent 70%);
 
   &::after {
     content: '';
     position: absolute;
     inset: 0;
     background-image: var(--stripes), var(--rainbow);
-    background-size: 200%, 100%;
-    animation: smoothBg 60s linear infinite;
+    background-size: 300%, 200%;
+    animation: smoothBg 90s linear infinite;
     background-attachment: fixed;
-    mix-blend-mode: difference;
-    filter: blur(10px) opacity(50%) saturate(200%);
+    mix-blend-mode: soft-light;
+    filter: blur(60px) opacity(30%) saturate(150%);
   }
+}
+
+/* Additional modern glow effects */
+.rays::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(circle at 30% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 25%),
+    radial-gradient(circle at 70% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 25%);
+  animation: rotate 120s linear infinite;
+  opacity: 0.5;
 }

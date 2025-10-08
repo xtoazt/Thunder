@@ -6,49 +6,99 @@ nav {
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--bg);
-  padding: 0 20px;
+  background: var(--element-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  padding: 0 28px;
   box-sizing: border-box;
   border: 1px solid var(--border);
-  border-radius: var(--border-radius);
-  height: 60px;
-  width: min(920px, 92vw);
+  border-radius: 60px;
+  height: 64px;
+  width: min(960px, 94vw);
   overflow: hidden;
   z-index: 999;
   color: var(--text);
-  backdrop-filter: saturate(120%) blur(6px);
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+nav:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-h);
 }
 
 nav img {
-  height: 35px;
-  width: 35px;
+  height: 40px;
+  width: 40px;
+  border-radius: 12px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-nav .flex { display: flex; gap: 24px; align-items: center; }
+nav img:hover {
+  transform: rotate(10deg) scale(1.1);
+}
+
+nav .flex { 
+  display: flex; 
+  gap: 32px; 
+  align-items: center; 
+}
 
 nav a {
   position: relative;
   width: max-content;
   cursor: pointer;
   user-select: none;
-  font-weight: 100;
+  font-weight: 500;
+  font-size: 15px;
   color: var(--text);
   text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0.7;
+}
+
+nav a:hover {
+  opacity: 1;
+  background: rgba(139, 92, 246, 0.1);
+  transform: translateY(-2px);
 }
 
 nav a::after {
   content: '';
-  background: var(--accent);
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
   width: 0%;
-  height: 1px;
+  height: 2px;
   position: absolute;
-  left: 0;
-  right: 0;
-  margin: auto;
-  bottom: -5px;
-  transition: 0.2s ease;
+  left: 16px;
+  bottom: 6px;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 2px;
 }
 
 nav a:hover::after {
-  width: 100%;
+  width: calc(100% - 32px);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  nav {
+    height: 56px;
+    padding: 0 20px;
+  }
+  
+  nav .flex {
+    gap: 20px;
+  }
+  
+  nav a {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+  
+  nav img {
+    height: 32px;
+    width: 32px;
+  }
 }

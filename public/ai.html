@@ -13,14 +13,14 @@
   <link rel="stylesheet" href="assets/css/nav.css" />
   <style>
     .ai-wrap {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 24px;
+      padding: 32px;
     }
 
     .row {
       display: flex;
-      gap: 8px;
+      gap: 12px;
       align-items: center;
       flex-wrap: wrap;
     }
@@ -29,65 +29,116 @@
     input,
     button,
     textarea {
-      background: #111318;
-      color: #e5e7eb;
-      border: 1px solid #23262f;
-      border-radius: 10px;
-      padding: 10px 12px;
+      background: var(--element-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      color: var(--text);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-family: var(--font);
+      font-size: 15px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    select:hover,
+    input:hover,
+    button:hover {
+      border-color: var(--border-h);
+    }
+
+    select:focus,
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    button {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.5);
     }
 
     textarea {
       width: 100%;
-      min-height: 120px;
+      min-height: 140px;
       resize: vertical;
     }
 
     .chat {
-      margin-top: 16px;
-      border: 1px solid #23262f;
-      border-radius: 12px;
-      padding: 12px;
-      background: #0b0d12;
+      margin-top: 20px;
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      background: var(--element-bg);
+      backdrop-filter: blur(20px) saturate(180%);
       max-height: 60vh;
       overflow: auto;
+      box-shadow: var(--shadow-md);
     }
 
     .msg {
-      padding: 10px 12px;
-      border-bottom: 1px solid #1b1e26;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      border-radius: 16px;
       white-space: pre-wrap;
+      line-height: 1.6;
+      background: rgba(20, 25, 45, 0.5);
+      border-left: 3px solid transparent;
     }
 
     .msg.me {
-      color: #d1d5db;
+      color: var(--text);
+      border-left-color: var(--accent);
+      background: rgba(139, 92, 246, 0.1);
     }
 
     .msg.ai {
-      color: #b6c2ff;
+      color: var(--text);
+      border-left-color: #60a5fa;
+      background: rgba(59, 130, 246, 0.1);
     }
 
     .msg:last-child {
-      border-bottom: 0;
+      margin-bottom: 0;
     }
 
     .small {
-      color: #9aa3b2;
-      font-size: 12px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      opacity: 0.7;
     }
 
     .pill {
-      padding: 4px 8px;
-      border: 1px solid #23262f;
+      padding: 8px 16px;
+      border: 2px solid var(--border);
       border-radius: 999px;
-      background: #0f1218;
-      color: #cbd5e1;
+      background: var(--element-bg);
+      backdrop-filter: blur(20px);
+      color: var(--text);
       cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      font-weight: 500;
+    }
+
+    .pill:hover {
+      border-color: var(--border-h);
+      transform: translateY(-2px);
     }
 
     .pill.active {
-      background: var(--accent, #b578ff);
-      color: #0b0d12;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+      color: white;
       border-color: transparent;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
     }
   </style>
 </head>
