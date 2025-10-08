@@ -4,6 +4,7 @@
   --text: #fff;
   --font: 'Questrial', Arial, Helvetica, sans-serif;
   --text-secondary: ;
+  --accent: #b578ff;
   /* Element css */
   --element-bg: #1e1922;
   --border: #2f2f2f;
@@ -15,6 +16,7 @@
 :root.theme-dark {
   --bg: #0b0d12;
   --text: #e5e7eb;
+  --accent: #b578ff;
   --element-bg: #12151b;
   --border: #23262f;
 }
@@ -22,6 +24,7 @@
 :root.theme-light {
   --bg: #fafafc;
   --text: #0b0d12;
+  --accent: #6b4df6;
   --element-bg: #ffffff;
   --border: #e6e7eb;
 }
@@ -29,6 +32,7 @@
 :root.theme-premium {
   --bg: radial-gradient(1200px 500px at 0% 0%, #111527 10%, transparent 40%), #0b0d12;
   --text: #f3f4f6;
+  --accent: #b578ff;
   --element-bg: rgba(17,19,24,0.7);
   --border: rgba(255,255,255,0.08);
 }
