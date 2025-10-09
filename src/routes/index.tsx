@@ -49,9 +49,22 @@ function Home() {
   const settings = useSettings();
   const [loading, setLoading] = useState(true);
   const [showSupportAlert, setShowSupportAlert] = useState(false);
+  const [showUpdateAlert, setShowUpdateAlert] = useState(false);
+  
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    // Check if user has seen the update popup
+    const hasSeenUpdate = localStorage.getItem("thundr:updateSeen:v2");
+    if (!hasSeenUpdate) {
+      const timer = setTimeout(() => {
+        setShowUpdateAlert(true);
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   useEffect(() => {
@@ -76,6 +89,30 @@ function Home() {
   return (
     <>
       <OnBoarding />
+      
+      {/* Update Notification */}
+      <AlertDialog open={showUpdateAlert}>
+        <AlertDialogContent className="border-none rounded-full">
+          <AlertDialogHeader>
+            <AlertDialogTitle>✨ Thundr Got an Update!</AlertDialogTitle>
+            <AlertDialogDescription>
+              sorry bout that ass update but now it lowk looks fire so yea
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction 
+              onClick={() => {
+                localStorage.setItem("thundr:updateSeen:v2", "true");
+                setShowUpdateAlert(false);
+              }}
+            >
+              Got it!
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Support Alert */}
       <AlertDialog open={showSupportAlert}>
         <AlertDialogContent className="border-none rounded-full">
           <AlertDialogHeader>
