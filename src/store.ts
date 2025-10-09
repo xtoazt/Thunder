@@ -39,7 +39,7 @@ interface SettingSetters {
 
 const DEFAULT_SETTINGS: SettingValues = {
   version: "1.0.0",
-  proxy: "scramjet",
+  proxy: "uv",
   transport: {
     path: "/libcurl/index.mjs",
     name: "libcurl",
@@ -53,9 +53,7 @@ const DEFAULT_SETTINGS: SettingValues = {
     name: "Brave",
     url: "https://search.brave.com/search?q=",
   },
-  wispUrl: `${location.protocol.includes("https") ? "wss://" : "ws://"}${
-    location.host
-  }/w/`,
+  wispUrl: "wss://wisp.mercurywork.shop/",
 };
 
 type SettingsStore = SettingValues & SettingSetters;
@@ -65,7 +63,7 @@ const useSettings = create<SettingsStore>()(
     (set) => ({
       version: "1.0.0",
       setVersion: (version: string) => set(() => ({ version })),
-      proxy: "scramjet",
+      proxy: "uv",
       transport: {
         path: "/libcurl/index.mjs",
         name: "libcurl",
@@ -90,10 +88,8 @@ const useSettings = create<SettingsStore>()(
         name: "Brave",
         url: "https://search.brave.com/search?q=",
       },
-      // defaults to current websites wisp url
-      wispUrl: `${location.protocol.includes("https") ? "wss://" : "ws://"}${
-        location.host
-      }/w/`,
+      // Public WISP server (like UV-Static-2.0 uses)
+      wispUrl: "wss://wisp.mercurywork.shop/",
       setWispUrl: (wispUrl: string) => set(() => ({ wispUrl })),
       setProxy: (proxy: "uv" | "scramjet") => set(() => ({ proxy })),
       setSearchEngine: (name: string, url: string) =>
