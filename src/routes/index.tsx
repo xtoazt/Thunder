@@ -64,22 +64,26 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    // Check if user has seen the update popup
+    // Check if onboarding is complete first
+    const hasCompletedOnboarding = localStorage.getItem("onboardingCompleted");
     const hasSeenUpdate = localStorage.getItem("thundr:updateSeen:v2");
-    if (!hasSeenUpdate) {
+    
+    // Only show update popup if onboarding is done and update not seen
+    if (hasCompletedOnboarding && !hasSeenUpdate) {
       const timer = setTimeout(() => {
         setShowUpdateAlert(true);
       }, 1500);
       return () => clearTimeout(timer);
     }
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const random = Math.random() * 100 + 1;
-      if (random <= 20) setShowSupportAlert(true);
-    }, 100);
-    return () => clearTimeout(timer);
+    
+    // Show support alert only if both onboarding and update are done
+    if (hasCompletedOnboarding && hasSeenUpdate) {
+      const timer = setTimeout(() => {
+        const random = Math.random() * 100 + 1;
+        if (random <= 20) setShowSupportAlert(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   // Analytics & meta
