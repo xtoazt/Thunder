@@ -38,7 +38,7 @@ interface SettingSetters {
 }
 
 const DEFAULT_SETTINGS: SettingValues = {
-  version: "1.0.0",
+  version: "2.0.0",
   proxy: "uv",
   transport: {
     path: "/libcurl/index.mjs",
@@ -60,8 +60,8 @@ type SettingsStore = SettingValues & SettingSetters;
 
 const useSettings = create<SettingsStore>()(
   persist(
-    (set) => ({
-      version: "1.0.0",
+    (set, get) => ({
+      version: "2.0.0",
       setVersion: (version: string) => set(() => ({ version })),
       proxy: "uv",
       transport: {
@@ -103,6 +103,20 @@ const useSettings = create<SettingsStore>()(
     }),
     {
       name: "settings",
+      version: 2,
+      migrate: (persistedState: any, version: number) => {
+        // Force update to new WISP server if using old local one
+        if (version < 2) {
+          console.log("Migrating settings to v2 - updating WISP server");
+          return {
+            ...persistedState,
+            version: "2.0.0",
+            wispUrl: "wss://wisp.mercurywork.shop/",
+            proxy: "uv",
+          };
+        }
+        return persistedState;
+      },
     }
   )
 );
