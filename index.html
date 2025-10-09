@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/assets/imgs/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thundr</title>
+    <meta name="description" content="The better way to browse." />
+    <meta name="og:image" content="/assets/imgs/logo.png" />
+
+    <link rel="prefetch" href="/scram/scramjet.worker.js" />
+    <link rel="prefetch" href="/scram/scramjet.shared.js" />
+</head>
+
+<body>
+    <div id="root"></div>
+    <input type="password" name="" id=""
+        style="height: 0px; width: 0px; position: absolute; top: -1000px; left: -1000px" />
+    <script src="/scram/scramjet.controller.js"></script>
+    <script>
+        const scramjet = new ScramjetController({
+            prefix: "/~/scramjet/",
+            files: {
+                wasm: "/scram/scramjet.wasm.wasm",
+                worker: "/scram/scramjet.worker.js",
+                client: "/scram/scramjet.client.js",
+                shared: "/scram/scramjet.shared.js",
+                sync: "/scram/scramjet.sync.js",
+            },
+        });
+        window.sj = scramjet;
+    </script>
+    <script src="/uv/uv.bundle.js"></script>
+    <script src="/uv/uv.config.js"></script>
+    <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>
