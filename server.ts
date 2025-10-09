@@ -32,14 +32,18 @@ const ALLOWED_MODELS = [
   "gpt-5-mini"
 ];
 
-const openai = new OpenAI({
-  baseURL: process.env.OPENROUTER_API_KEY ? "https://openrouter.ai/api/v1" : LLM7_URL,
-  apiKey: process.env.OPENROUTER_API_KEY || LLM7_API_KEY,
-  defaultHeaders: process.env.OPENROUTER_API_KEY ? {
-    "HTTP-Referer": "https://thundr.app",
-    "X-Title": "Thundr",
-  } : {},
-});
+// Initialize OpenAI client only if API keys are available
+let openai: OpenAI | null = null;
+if (process.env.OPENROUTER_API_KEY || LLM7_API_KEY) {
+  openai = new OpenAI({
+    baseURL: process.env.OPENROUTER_API_KEY ? "https://openrouter.ai/api/v1" : LLM7_URL,
+    apiKey: process.env.OPENROUTER_API_KEY || LLM7_API_KEY || "dummy",
+    defaultHeaders: process.env.OPENROUTER_API_KEY ? {
+      "HTTP-Referer": "https://thundr.app",
+      "X-Title": "Thundr",
+    } : {},
+  });
+}
 
 let sponserFile: Sponser[] = [];
 if (fs.existsSync(path.join(__dirname, "sponsers.json"))) {
@@ -136,8 +140,8 @@ app.get('/api/ai/models', (req, res) => {
 
 app.post('/api/ai/chat', async (req, res) => {
   try {
-    if (!LLM7_API_KEY && !process.env.OPENROUTER_API_KEY) {
-      return res.status(500).send({ error: 'AI API key not set on server' });
+    if (!openai) {
+      return res.status(500).send({ error: 'AI API key not configured on server' });
     }
     const { model, messages, temperature = 0.7, max_tokens } = req.body as any || {};
     if (!model || !Array.isArray(messages)) {
@@ -190,6 +194,14 @@ app.post('/api/ai/chat', async (req, res) => {
 
 app.post("/api/chat", async (req, res) => {
   const { messages, model } = req.body as ChatPayload;
+  
+  if (!openai) {
+    return res.status(500).send({
+      success: false,
+      error: "AI API key not configured on server",
+    });
+  }
+  
   if (!messages || !model) {
     return res.status(400).send({
       success: false,
