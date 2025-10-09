@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import GridPattern from "@/components/ui/grid-pattern";
 import { cn } from "@/lib/utils";
 import {
@@ -20,8 +20,24 @@ type Game = {
 };
 
 const getList = async (): Promise<Game[]> => {
-  const res = await fetch("/api/games");
-  return await res.json();
+  try {
+    // Try to fetch from API first (when backend is available)
+    const res = await fetch("/api/games");
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch (e) {
+    console.log("API not available, loading static data");
+  }
+  
+  // Fallback to static JSON file
+  try {
+    const res = await fetch("/assets/js/json/games.json");
+    return await res.json();
+  } catch (e) {
+    console.error("Failed to load games:", e);
+    return [];
+  }
 };
 
 export const Route = createFileRoute("/games")({
@@ -32,7 +48,6 @@ export const Route = createFileRoute("/games")({
 function RouteComponent() {
   const list = Route.useLoaderData();
   const [search, setSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   const filteredGames = list.filter((game: Game) => {
     const matchesSearch = game.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -78,7 +93,7 @@ function RouteComponent() {
                   className="rounded-xl object-cover h-[10rem] w-[10rem]"
                   width={150}
                   height={150}
-                  onError={(e) => {
+                  onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                     (e.target as HTMLImageElement).src = '/assets/imgs/logo.png';
                   }}
                 />

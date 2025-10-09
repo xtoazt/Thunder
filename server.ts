@@ -94,7 +94,7 @@ app.get("/api/search", async (req, res) => {
   }
 });
 
-app.get("/api/sponser", async (req, res) => {
+app.get("/api/sponser", async (_req, res) => {
   if (sponserFile.length > 0) {
     res.send(sponserFile[Math.floor(Math.random() * sponserFile.length)]);
   } else {
@@ -102,7 +102,7 @@ app.get("/api/sponser", async (req, res) => {
   }
 });
 
-app.get("/api/games", async (req, res) => {
+app.get("/api/games", async (_req, res) => {
   try {
     const gamesPath = path.join(__dirname, "public", "assets", "js", "json", "games.json");
     if (fs.existsSync(gamesPath)) {
@@ -117,7 +117,7 @@ app.get("/api/games", async (req, res) => {
   }
 });
 
-app.get("/api/apps", async (req, res) => {
+app.get("/api/apps", async (_req, res) => {
   try {
     const appsPath = path.join(__dirname, "public", "assets", "js", "json", "apps.json");
     if (fs.existsSync(appsPath)) {
@@ -133,7 +133,7 @@ app.get("/api/apps", async (req, res) => {
 });
 
 // AI API routes
-app.get('/api/ai/models', (req, res) => {
+app.get('/api/ai/models', (_req, res) => {
   const models = [{"id":"deepseek-v3.1","object":"model","created":1759850972,"owned_by":"","modalities":{"input":["text"]}},{"id":"deepseek-reasoning","object":"model","created":1759850972,"owned_by":"","modalities":{"input":["text"]}},{"id":"gemini-2.5-flash-lite","object":"model","created":1759850972,"owned_by":"","modalities":{"input":["text","image"]}},{"id":"gemini-search","object":"model","created":1759850972,"owned_by":"","modalities":{"input":["text","image"]}},{"id":"mistral-small-3.1-24b-instruct-2503","object":"model","created":1759850972,"owned_by":"","modalities":{"input":["text"]}},{"id":"nova-fast","object":"model","created":1759850972,"owned_by":"","modalities":{"input":["text"]}},{"id":"gpt-5-mini","object":"model","created":1759850972,"owned_by":"","modalities":{"input":["text","image"]}},{"id":"gpt-5-nano-2025-08-07","object":"model","created":1759850972,"owned_by":"","modalities":{"input":["text","image"]}},{"id":"gpt-5-chat","object":"model","created":1759850972,"owned_by":"","modalities":{"input":["text","image"]}},{"id":"gpt-o4-mini-2025-04-16","object":"model","created":1759850972,"owned_by":"","modalities":{"input":["text","image"]}},{"id":"qwen2.5-coder-32b-instruct","object":"model","created":1759850972,"owned_by":"","modalities":{"input":["text"]}},{"id":"google/gemini-2.0-flash-001","object":"model","created":1759850972,"owned_by":"google","modalities":{"input":["text"]}}];
   res.send(models);
 });
@@ -282,7 +282,7 @@ app.register(fastifyStatic, {
   wildcard: true,
 });
 
-app.setNotFoundHandler((req, res) => {
+app.setNotFoundHandler((_req, res) => {
   res.sendFile("index.html");
 });
 

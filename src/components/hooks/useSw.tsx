@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { VERSION } from "@/constants";
 import { BareMuxConnection } from "@mercuryworkshop/bare-mux";
 import { useSettings } from "../../store";
-import { log } from "@/lib/utils";
 declare global {
   interface Window {
     Connection: BareMuxConnection;
@@ -28,19 +27,19 @@ const useSw = (path: string, scope: string = "/") => {
           .register(`./sw.js?v=${VERSION}`, { scope })
           .then(
             function (registration) {
-              log.info(
+              console.log(
                 `[sw] ${path} successfuly registered with a scope of ${registration.scope}`
               );
             },
             function (err) {
-              log.error(`[sw] ${path} failed to register, error: `, err);
+              console.error(`[sw] ${path} failed to register, error: `, err);
             }
           );
       }
       navigator.serviceWorker.ready.then(() => {
         const connection = new BareMuxConnection("/baremux/worker.js");
         window.Connection = connection;
-        log.info(
+        console.log(
           `Setting wisp url to ${settingsStore.wispUrl} and using the transport ${settingsStore.transport.name} (${settingsStore.transport.path})`
         );
         connection.setTransport(settingsStore.transport.path, [

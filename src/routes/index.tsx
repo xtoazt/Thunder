@@ -36,8 +36,15 @@ type Sponsor = {
 };
 
 const getSponsor = async (): Promise<Sponsor> => {
-  const res = await fetch("/api/sponser");
-  return res.json();
+  try {
+    const res = await fetch("/api/sponser");
+    if (res.ok) {
+      return res.json();
+    }
+  } catch (e) {
+    // Backend not available, return empty sponsor
+  }
+  return { title: "", icon: "", url: "", discord: "" };
 };
 
 export const Route = createFileRoute("/")({

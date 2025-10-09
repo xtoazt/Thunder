@@ -1,0 +1,11 @@
+node_modules
+.git
+old_public
+*.backup
+*.log
+.cache
+.dev
+server.ts
+index.js.backup
+data.js.backup
+
