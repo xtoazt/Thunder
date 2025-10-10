@@ -660,6 +660,7 @@ const TabbedHome = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(defaultBookmarks);
   const [draggedTabId, setDraggedTabId] = useState<string | null>(null);
+  const [showProxyError, setShowProxyError] = useState(false);
   const iframeRefs = useRef<{ [key: string]: HTMLIFrameElement | null }>({});
   const tabBarRef = useRef<HTMLDivElement>(null);
   const urlInputRef = useRef<HTMLInputElement>(null);
@@ -1005,6 +1006,8 @@ const TabbedHome = () => {
     if (e) e.preventDefault();
     if (!inputUrl || inputUrl.startsWith("about:")) return;
 
+    setShowProxyError(false); // Reset error state
+
     let processedUrl = inputUrl.trim();
     let isSearch = false;
 
@@ -1045,12 +1048,63 @@ const TabbedHome = () => {
         const encodedUrl = encodeURIComponent(processedUrl);
         iframeRefs.current[activeTabId]!.src =
           `/~/${settingsStore.proxy}/${encodedUrl}`;
+        
+        // Check for proxy errors after a delay
+        setTimeout(() => {
+          try {
+            const iframe = iframeRefs.current[activeTabId];
+            if (iframe) {
+              const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+              if (iframeDoc?.body?.textContent?.includes('404') || 
+                  iframeDoc?.body?.textContent?.includes('Failed')) {
+                setShowProxyError(true);
+              }
+            }
+          } catch (e) {
+            // Cross-origin error is expected, proxy might be working
+            console.log('[proxy-check] Cross-origin (expected)');
+          }
+        }, 5000);
       }
     }
   };
 
   return (
     <div className="flex flex-col w-full h-screen overflow-hidden bg-background/95 backdrop-blur-sm">
+      {showProxyError && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-background/95 backdrop-blur-sm">
+          <div className="max-w-2xl mx-auto p-8">
+            <div className="bg-card/80 backdrop-blur-xl border border-border/30 rounded-2xl p-8 shadow-2xl">
+              <div className="text-center space-y-6">
+                <div className="text-6xl mb-4">😅</div>
+                <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-orange-500">
+                  Oops!
+                </h1>
+                <p className="text-xl text-muted-foreground">
+                  Damn it i broke thundr again, you can use this link for now, ill fix it later lol
+                </p>
+                <div className="flex flex-col gap-4 mt-8">
+                  <a
+                    href="https://so-tuff.teamgaming.pw/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-8 py-4 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full font-semibold text-lg transition-all hover:scale-105 shadow-lg"
+                  >
+                    Use Backup Site →
+                  </a>
+                  <button
+                    onClick={() => setShowProxyError(false)}
+                    className="px-8 py-3 bg-muted hover:bg-muted/80 rounded-full font-medium transition-all"
+                  >
+                    Go Back
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
       {/* Tab bar */}
       <div className="flex items-center bg-background/80 backdrop-blur-md border-b border-border/40 h-12 px-1">
         <div
