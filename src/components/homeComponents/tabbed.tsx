@@ -222,35 +222,6 @@ const SettingsPage = () => {
                       </div>
                       <Separator className="bg-border/20" />
 
-                      <div>
-                        <h3 className="text-lg font-medium mb-3 flex items-center gap-2">
-                          <span className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                            3
-                          </span>
-                          Site Type
-                        </h3>
-                        <Select
-                          value={settingsStore.siteType}
-                          onValueChange={(value) =>
-                            settingsStore.setSiteType(
-                              value as "browser" | "default"
-                            )
-                          }
-                        >
-                          <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Select site type" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="browser">Browser</SelectItem>
-                            <SelectItem value="default">Default</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <p className="text-sm text-muted-foreground mt-2 ml-8">
-                          The main look of Thundr that YOU can change
-                        </p>
-                      </div>
-
-                      <Separator className="bg-border/20" />
 
                       <div>
                         <h3 className="text-lg font-medium mb-3 flex items-center gap-2">

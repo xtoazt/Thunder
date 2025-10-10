@@ -660,34 +660,6 @@ const DefaultHome = () => {
               <div className="flex flex-col space-y-2">
                 <Separator className="my-2 bg-primary/10" />
                 <div className="flex justify-between px-4 items-center">
-                  <h3 className="text-xl font-medium">Site Type</h3>
-                  <Select
-                    onValueChange={(e) =>
-                      settingStore.setSiteType(e as "browser" | "default")
-                    }
-                  >
-                    <SelectTrigger className="w-[40%] rounded-2xl bg-card/50 border-primary/10 hover:border-primary/30 transition-colors">
-                      <SelectValue placeholder={`${settingStore.siteType}`} />
-                    </SelectTrigger>
-                    <SelectContent className="rounded-2xl bg-card/90 backdrop-blur-xl border-primary/10">
-                      <SelectItem
-                        className="rounded-2xl"
-                        value="default"
-                        disabled={settingStore.siteType === "default"}
-                      >
-                        Default
-                      </SelectItem>
-                      <SelectItem
-                        value="browser"
-                        className="rounded-xl hover:bg-primary/5 transition-colors cursor-pointer"
-                        disabled={settingStore.siteType === "browser"}
-                      >
-                        Browser
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex justify-between px-4 items-center">
                   <h3 className="text-xl font-medium">Title</h3>
                   <Input
                     className="w-[40%] rounded-2xl bg-card/50 border-primary/10 hover:border-primary/30 transition-colors focus-visible:ring-primary/20 focus-visible:border-primary/40"

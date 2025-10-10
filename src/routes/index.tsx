@@ -70,10 +70,11 @@ function Home() {
     const hasSeenUpdate = localStorage.getItem("thundr:updateSeen:v3");
     
     // Only show update popup if onboarding is done and update not seen
+    // Add delay to ensure it always shows for new users
     if (hasCompletedOnboarding && !hasSeenUpdate) {
       const timer = setTimeout(() => {
         setShowUpdateAlert(true);
-      }, 1500);
+      }, 800);
       return () => clearTimeout(timer);
     }
     
@@ -163,13 +164,7 @@ function Home() {
 
       <AnimatePresence>{loading && <Loading key="loader" />}</AnimatePresence>
 
-      {settings.siteType === "default" ? (
-        <Default />
-      ) : settings.siteType === "browser" ? (
-        <Tabbed />
-      ) : (
-        <Default />
-      )}
+      <Tabbed />
     </>
   );
 }

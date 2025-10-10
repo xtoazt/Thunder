@@ -23,8 +23,7 @@ const OnBoarding = () => {
     }
   }, []);
 
-  const handleSiteTypeSelection = (siteType: "default" | "browser") => {
-    settings.setSiteType(siteType);
+  const handleComplete = () => {
     localStorage.setItem("onboardingCompleted", "true");
     setShowOnboarding(false);
   };
@@ -58,77 +57,51 @@ const OnBoarding = () => {
               Welcome to Thundr
             </CardTitle>
             <CardDescription className="text-lg">
-              Choose how you'd like to experience Thundr
+              A powerful tab-based web browser with UV proxy
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <motion.div
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Card
-                className="h-full cursor-pointer border-border/30 hover:border-primary/50 transition-all"
-                onClick={() => handleSiteTypeSelection("default")}
-              >
-                <CardHeader>
-                  <CardTitle>Default Mode</CardTitle>
-                  <CardDescription>
-                    Clean, minimalist interface with a search-focused experience
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-40 bg-gradient-to-br from-primary/5 to-primary/20 rounded-lg flex items-center justify-center">
-                    <div className="w-3/4 h-8 bg-white/20 rounded-full shadow-lg"></div>
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button
-                    variant="outline"
-                    className="w-full"
-                    onClick={() => handleSiteTypeSelection("default")}
-                  >
-                    Select Default Mode
-                  </Button>
-                </CardFooter>
-              </Card>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Card
-                className="h-full cursor-pointer border-border/30 hover:border-primary/50 transition-all"
-                onClick={() => handleSiteTypeSelection("browser")}
-              >
-                <CardHeader>
-                  <CardTitle>Browser Mode</CardTitle>
-                  <CardDescription>
-                    Full browser experience with tabs and advanced features
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-40 bg-gradient-to-br from-primary/5 to-primary/20 rounded-lg flex flex-col items-center justify-start p-2">
-                    <div className="w-full h-8 bg-white/20 rounded-t-lg flex items-center px-2 gap-1">
-                      <div className="w-16 h-6 bg-white/30 rounded-md"></div>
-                      <div className="w-16 h-6 bg-white/10 rounded-md"></div>
-                    </div>
-                    <div className="w-full h-8 bg-white/10 rounded-md mt-2"></div>
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button
-                    variant="default"
-                    className="w-full"
-                    onClick={() => handleSiteTypeSelection("browser")}
-                  >
-                    Select Browser Mode
-                  </Button>
-                </CardFooter>
-              </Card>
-            </motion.div>
+          <CardContent className="p-6">
+            <div className="space-y-6">
+              <div className="h-48 bg-gradient-to-br from-primary/10 to-primary/30 rounded-lg flex flex-col items-center justify-center p-4">
+                <div className="w-full h-10 bg-white/20 rounded-t-lg flex items-center px-3 gap-2 shadow-lg">
+                  <div className="w-20 h-7 bg-white/40 rounded-md"></div>
+                  <div className="w-20 h-7 bg-white/20 rounded-md"></div>
+                  <div className="w-8 h-7 bg-white/10 rounded-md ml-auto"></div>
+                </div>
+                <div className="w-full flex-1 bg-white/10 rounded-b-lg mt-2"></div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="space-y-2">
+                  <div className="text-primary font-semibold">✨ Features</div>
+                  <ul className="text-muted-foreground space-y-1">
+                    <li>• Tab-based browsing</li>
+                    <li>• UV proxy support</li>
+                    <li>• Bookmarks</li>
+                  </ul>
+                </div>
+                <div className="space-y-2">
+                  <div className="text-primary font-semibold">🚀 Fast & Secure</div>
+                  <ul className="text-muted-foreground space-y-1">
+                    <li>• WISP backend</li>
+                    <li>• Modern UI</li>
+                    <li>• Fullscreen mode</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </CardContent>
+          
+          <CardFooter>
+            <Button
+              variant="default"
+              className="w-full"
+              onClick={handleComplete}
+            >
+              Get Started →
+            </Button>
+          </CardFooter>
         </Card>
       </motion.div>
     </div>

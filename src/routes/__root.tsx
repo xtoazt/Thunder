@@ -36,14 +36,12 @@ function RenderComponent() {
   }, []);
   useEffect(() => {
     if (settingStore.version !== VERSION) {
-      // reset all settings
-      const currentType = settingStore.siteType;
+      // Update to new version
       settingStore.setDefault();
-      settingStore.setSiteType(currentType);
       settingStore.setVersion(VERSION);
       window.location.href = window.location.href + "?m=u" + VERSION;
     }
-  }, []);
+  }, [settingStore]);
   useSw("/sw.js", "/");
   useEffect(() => {
     if (

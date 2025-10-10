@@ -9,7 +9,6 @@ interface SettingValues {
     name: "libcurl" | "epoxy";
   };
   cloak: "none" | "aboutBlank";
-  siteType: "browser" | "default";
   title: string;
   icon: string;
   searchEngine: {
@@ -28,7 +27,6 @@ interface SettingSetters {
     name: "libcurl" | "epoxy"
   ) => void;
   setCloak: (cloak: "none" | "aboutBlank") => void;
-  setSiteType: (siteType: "browser" | "default") => void;
   setTitle: (title: string) => void;
   setIcon: (icon: string) => void;
   setWispUrl: (wispUrl: string) => void;
@@ -46,7 +44,6 @@ const DEFAULT_SETTINGS: SettingValues = {
   },
   allowTabReordering: false,
   cloak: "none",
-  siteType: "browser",
   title: "Thundr",
   icon: "/assets/imgs/logo.png",
   searchEngine: {
@@ -76,9 +73,6 @@ const useSettings = create<SettingsStore>()(
         name: "libcurl" | "epoxy"
       ) => set(() => ({ transport: { path, name } })),
       cloak: "none",
-      siteType: "browser",
-      setSiteType: (siteType: "browser" | "default") =>
-        set(() => ({ siteType })),
       setCloak: (cloak: "none" | "aboutBlank") => set(() => ({ cloak })),
   title: "Thundr",
   setTitle: (title: string) => set(() => ({ title })),
