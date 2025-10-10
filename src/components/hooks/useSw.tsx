@@ -27,19 +27,29 @@ const useSw = (path: string, scope: string = "/") => {
         );
       
       // Setup BareMux connection for WISP
-      navigator.serviceWorker.ready.then(() => {
-        const connection = new BareMuxConnection("/baremux/worker.js");
-        window.Connection = connection;
-        console.log(
-          `[uv] Setting WISP URL to ${settingsStore.wispUrl} using ${settingsStore.transport.name} transport`
-        );
-        connection.setTransport(settingsStore.transport.path, [
-          {
-            wisp: settingsStore.wispUrl,
-          },
-        ]).catch((err) => {
-          console.error("[baremux] Failed to set transport:", err);
-        });
+      // Wait a bit for service worker to fully initialize
+      navigator.serviceWorker.ready.then(async () => {
+        try {
+          // Give service worker extra time to initialize
+          await new Promise(resolve => setTimeout(resolve, 100));
+          
+          const connection = new BareMuxConnection("/baremux/worker.js");
+          window.Connection = connection;
+          
+          console.log(
+            `[baremux] Connecting to WISP: ${settingsStore.wispUrl} using ${settingsStore.transport.name}`
+          );
+          
+          await connection.setTransport(settingsStore.transport.path, [
+            {
+              wisp: settingsStore.wispUrl,
+            },
+          ]);
+          
+          console.log("[baremux] Successfully connected!");
+        } catch (err) {
+          console.error("[baremux] Failed to initialize:", err);
+        }
       });
     }
   }, [path, settingsStore.wispUrl, settingsStore.transport]);
