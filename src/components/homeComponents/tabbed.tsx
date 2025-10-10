@@ -1060,7 +1060,10 @@ const TabbedHome = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-screen overflow-hidden bg-background/95 backdrop-blur-sm">
+    <div className="flex flex-col w-full h-screen overflow-hidden relative">
+      {/* Animated background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-blue-500/5 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-purple-900/10 via-transparent to-transparent pointer-events-none" />
       <AnimatePresence>
         {showProxyError && (
           <motion.div
@@ -1105,7 +1108,7 @@ const TabbedHome = () => {
       </AnimatePresence>
       
       {/* Tab bar */}
-      <div className="flex items-center bg-background/80 backdrop-blur-md border-b border-border/40 h-12 px-1">
+      <div className="relative flex items-center bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl border-b border-white/5 h-12 px-1 shadow-lg shadow-black/20 z-10">
         <div
           ref={tabBarRef}
           className="flex-1 flex items-center overflow-x-auto overflow-y-hidden h-full"
@@ -1124,11 +1127,11 @@ const TabbedHome = () => {
               onDragOver={(e) => handleDragOver(e, tab.id)}
               onDragEnd={handleDragEnd}
               className={cn(
-                "flex-shrink-0 flex items-center justify-between h-9 px-3 relative rounded-t-lg mr-1 text-sm transition-all cursor-pointer group",
+                "flex-shrink-0 flex items-center justify-between h-9 px-3 relative rounded-t-lg mr-1 text-sm transition-all duration-200 cursor-pointer group",
                 tab.isActive
-                  ? "bg-card text-card-foreground shadow-sm z-10"
-                  : "bg-muted/50 text-muted-foreground hover:bg-muted/80 mt-1",
-                draggedTabId === tab.id && "opacity-50"
+                  ? "bg-gradient-to-b from-primary/20 to-primary/10 text-foreground shadow-lg shadow-primary/10 border-t border-x border-primary/30 z-10 backdrop-blur-xl"
+                  : "bg-gradient-to-b from-muted/40 to-muted/20 text-muted-foreground hover:from-muted/60 hover:to-muted/40 hover:text-foreground mt-1 border-t border-x border-white/5",
+                draggedTabId === tab.id && "opacity-50 scale-95"
               )}
               initial={{ opacity: 0.8, y: 4 }}
               animate={{ opacity: 1, y: tab.isActive ? 0 : 4 }}
@@ -1185,29 +1188,29 @@ const TabbedHome = () => {
         <div className="flex items-center mr-3 space-x-1">
           <button
             onClick={goBack}
-            className="p-1.5 rounded-full hover:bg-muted/80 transition-colors disabled:opacity-50"
+            className="p-1.5 rounded-full hover:bg-primary/20 transition-all duration-200 disabled:opacity-30 hover:scale-110 hover:shadow-lg hover:shadow-primary/10 group"
             title="Go back"
           >
-            <ChevronLeft size={18} className="text-foreground/70" />
+            <ChevronLeft size={18} className="text-foreground group-hover:-translate-x-0.5 transition-transform" />
           </button>
           <button
             onClick={goForward}
-            className="p-1.5 rounded-full hover:bg-muted/80 transition-colors disabled:opacity-50"
+            className="p-1.5 rounded-full hover:bg-primary/20 transition-all duration-200 disabled:opacity-30 hover:scale-110 hover:shadow-lg hover:shadow-primary/10 group"
             title="Go forward"
           >
-            <ChevronRight size={18} className="text-foreground/70" />
+            <ChevronRight size={18} className="text-foreground group-hover:translate-x-0.5 transition-transform" />
           </button>
           <button
             onClick={refreshPage}
-            className="p-1.5 rounded-full hover:bg-muted/80 transition-colors disabled:opacity-50"
+            className="p-1.5 rounded-full hover:bg-primary/20 transition-all duration-200 disabled:opacity-30 hover:scale-110 hover:shadow-lg hover:shadow-primary/10 group"
             title="Reload page"
           >
-            <RotateCcw size={18} className="text-foreground/70" />
+            <RotateCcw size={18} className="text-foreground group-hover:rotate-180 transition-transform duration-500" />
           </button>
         </div>
 
         <form onSubmit={handleUrlSubmit} className="flex-1 relative group mx-2">
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground z-10 pointer-events-none">
+          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground z-10 pointer-events-none group-focus-within:text-primary transition-colors">
             <Search size={16} />
           </div>
           <Input
@@ -1216,7 +1219,7 @@ const TabbedHome = () => {
             value={inputUrl}
             onChange={(e) => setInputUrl(e.target.value)}
             placeholder="Search or enter website address"
-            className="w-full rounded-full bg-muted/50 hover:bg-muted/70 focus:bg-card pl-9 pr-4 h-9 transition-all border border-transparent focus:border-primary/30 focus:ring-1 focus:ring-primary/30 outline-none"
+            className="w-full rounded-full bg-gradient-to-r from-muted/40 to-muted/30 hover:from-muted/60 hover:to-muted/50 focus:from-primary/10 focus:to-primary/5 pl-9 pr-4 h-9 transition-all duration-200 border border-white/5 focus:border-primary/30 focus:ring-2 focus:ring-primary/20 outline-none shadow-inner backdrop-blur-xl"
             onKeyDown={(e) => {
               if (e.key === "Enter") handleUrlSubmit();
             }}
@@ -1226,28 +1229,28 @@ const TabbedHome = () => {
         <div className="flex items-center ml-3 space-x-1">
           <button
             onClick={handleAddBookmark}
-            className="p-1.5 rounded-full hover:bg-muted/80 transition-colors"
+            className="p-1.5 rounded-full hover:bg-primary/20 transition-all duration-200 hover:scale-110 hover:shadow-lg hover:shadow-primary/10 group"
             title="Add bookmark"
           >
-            <Bookmark size={18} className="text-foreground/70" />{" "}
+            <Bookmark size={18} className="text-foreground group-hover:scale-110 transition-transform" />
           </button>
           <button
             onClick={toggleFullscreen}
-            className="p-1.5 rounded-full hover:bg-muted/80 transition-colors"
+            className="p-1.5 rounded-full hover:bg-primary/20 transition-all duration-200 hover:scale-110 hover:shadow-lg hover:shadow-primary/10 group"
             title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
           >
             {isFullscreen ? (
-              <Minimize size={18} className="text-foreground/70" />
+              <Minimize size={18} className="text-foreground group-hover:scale-90 transition-transform" />
             ) : (
-              <Maximize size={18} className="text-foreground/70" />
+              <Maximize size={18} className="text-foreground group-hover:scale-110 transition-transform" />
             )}
           </button>
           <button
             onClick={openSettings}
-            className="p-1.5 rounded-full hover:bg-muted/80 transition-colors"
+            className="p-1.5 rounded-full hover:bg-primary/20 transition-all duration-200 hover:scale-110 hover:shadow-lg hover:shadow-primary/10 group"
             title="Settings"
           >
-            <Settings size={18} className="text-foreground/70" />
+            <Settings size={18} className="text-foreground group-hover:rotate-90 transition-transform duration-300" />
           </button>
         </div>
       </div>
