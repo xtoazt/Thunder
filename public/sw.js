@@ -1,15 +1,24 @@
-// Service Worker for Thundr
-self.addEventListener('install', (event) => {
-  console.log('Service Worker installing.');
-  self.skipWaiting();
-});
+// Service Worker for Thundr - Routes UV and Scramjet
+importScripts('/uv/uv.bundle.js');
+importScripts('/uv/uv.config.js');
+importScripts('/scram/scramjet.shared.js');
+importScripts('/scram/scramjet.worker.js');
 
-self.addEventListener('activate', (event) => {
-  console.log('Service Worker activating.');
-  event.waitUntil(self.clients.claim());
-});
+const uv = new UVServiceWorker();
+const scramjet = new ScramjetServiceWorker();
 
 self.addEventListener('fetch', (event) => {
-  // Let the proxy service workers handle the requests
+  if (event.request.url.startsWith(location.origin + '/~/uv/')) {
+    event.respondWith(
+      (async () => {
+        if (await uv.route(event)) {
+          return await uv.fetch(event);
+        }
+        return await fetch(event.request);
+      })()
+    );
+  } else if (event.request.url.startsWith(location.origin + '/~/scramjet/')) {
+    event.respondWith(scramjet.fetch(event));
+  }
 });
 

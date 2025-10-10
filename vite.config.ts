@@ -42,6 +42,12 @@ export default defineConfig({
           dest: "epoxy",
           overwrite: false,
         },
+        {
+          // Copy custom UV config to override the default
+          src: "public/uv/uv.config.js",
+          dest: "uv",
+          overwrite: true,
+        },
       ],
     }),
   ],

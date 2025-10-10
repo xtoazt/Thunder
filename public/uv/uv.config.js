@@ -1,12 +1,9 @@
-// Public Bare Servers (choose one):
-// - https://bare.benrogo.net/
-// - https://uv.holy.how/
-// - https://tomp.app/bare/
-// - https://bare.shuttle.rip/
+// UV Configuration for Thundr
+// Using WISP backend instead of Bare server
+// WISP is configured via BareMux in the main app
 
 self.__uv$config = {
   prefix: "/~/uv/",
-  bare: "https://bare.benrogo.net/",
   encodeUrl: Ultraviolet.codec.xor.encode,
   decodeUrl: Ultraviolet.codec.xor.decode,
   handler: "/uv/uv.handler.js",
