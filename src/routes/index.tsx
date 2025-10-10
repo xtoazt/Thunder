@@ -66,7 +66,7 @@ function Home() {
   useEffect(() => {
     // Check if onboarding is complete first
     const hasCompletedOnboarding = localStorage.getItem("onboardingCompleted");
-    const hasSeenUpdate = localStorage.getItem("thundr:updateSeen:v2");
+    const hasSeenUpdate = localStorage.getItem("thundr:updateSeen:v3");
     
     // Only show update popup if onboarding is done and update not seen
     if (hasCompletedOnboarding && !hasSeenUpdate) {
@@ -111,14 +111,14 @@ function Home() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogAction 
-              onClick={() => {
-                localStorage.setItem("thundr:updateSeen:v2", "true");
-                setShowUpdateAlert(false);
-              }}
-            >
-              Got it!
-            </AlertDialogAction>
+              <AlertDialogAction
+                onClick={() => {
+                  localStorage.setItem("thundr:updateSeen:v3", "true");
+                  setShowUpdateAlert(false);
+                }}
+              >
+                Got it!
+              </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

@@ -5,7 +5,7 @@
 // - https://bare.shuttle.rip/
 
 self.__uv$config = {
-  prefix: "/service/",
+  prefix: "/~/uv/",
   bare: "https://bare.benrogo.net/",
   encodeUrl: Ultraviolet.codec.xor.encode,
   decodeUrl: Ultraviolet.codec.xor.decode,
