@@ -114,8 +114,8 @@ const DefaultHome = () => {
         p = "https://" + p;
       }
       setShouldOpen(true);
-      const encoding = encodeURIComponent(p);
-      frame.current!.src = `/~/${settingStore.proxy}/${encoding}`;
+      // Use standard encoding - UV service worker will handle it
+      frame.current!.src = `/~/service/${p}`;
       
       // Check if iframe loads, show error after timeout
       setTimeout(() => {
@@ -127,12 +127,12 @@ const DefaultHome = () => {
     }
     if (p && isPhrase) {
       setShouldOpen(true);
-      const encoding = encodeURIComponent(settingStore.searchEngine.url + p);
-      frame.current!.src = `/~/${settingStore.proxy}/${encoding}`;
+      const url = settingStore.searchEngine.url + p;
+      frame.current!.src = `/~/service/${url}`;
     } else {
       setShouldOpen(true);
-      const encoding = encodeURIComponent(settingStore.searchEngine.url + term);
-      frame.current!.src = `/~/${settingStore.proxy}/${encoding}`;
+      const url = settingStore.searchEngine.url + term;
+      frame.current!.src = `/~/service/${url}`;
     }
     
     // Check for proxy errors after a delay

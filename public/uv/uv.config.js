@@ -3,7 +3,7 @@
 // WISP is configured via BareMux in the main app
 
 self.__uv$config = {
-  prefix: "/~/uv/",
+  prefix: "/~/service/",
   encodeUrl: Ultraviolet.codec.xor.encode,
   decodeUrl: Ultraviolet.codec.xor.decode,
   handler: "/uv/uv.handler.js",

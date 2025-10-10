@@ -680,9 +680,7 @@ const TabbedHome = () => {
 
       const activeTabId = updatedTabs[activeTabIndex].id;
       if (iframeRefs.current[activeTabId]) {
-        const encodedUrl = encodeURIComponent(bookmark.url);
-        iframeRefs.current[activeTabId]!.src =
-          `/~/${settingsStore.proxy}/${encodedUrl}`;
+        iframeRefs.current[activeTabId]!.src = `/~/service/${bookmark.url}`;
       }
     }
   };
@@ -1045,9 +1043,8 @@ const TabbedHome = () => {
 
       const activeTabId = updatedTabs[activeTabIndex].id;
       if (iframeRefs.current[activeTabId]) {
-        const encodedUrl = encodeURIComponent(processedUrl);
-        iframeRefs.current[activeTabId]!.src =
-          `/~/${settingsStore.proxy}/${encodedUrl}`;
+        // Use /~/service/ path for UV - simpler and works with UV's routing
+        iframeRefs.current[activeTabId]!.src = `/~/service/${processedUrl}`;
         
         // Check for proxy errors after a delay
         setTimeout(() => {
@@ -1273,11 +1270,7 @@ const TabbedHome = () => {
                   ref={(el) => {
                     if (el) iframeRefs.current[tab.id] = el;
                   }}
-                  src={
-                    tab.url
-                      ? `/~/${settingsStore.proxy}/${encodeURIComponent(tab.url)}`
-                      : ""
-                  }
+                  src={tab.url ? `/~/service/${tab.url}` : ""}
                   className="w-full h-full border-0"
                   sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-presentation allow-top-navigation-by-user-activation"
                   title={tab.title}
