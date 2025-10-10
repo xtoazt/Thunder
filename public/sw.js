@@ -6,7 +6,8 @@ importScripts('/uv/uv.sw.js');
 const uv = new UVServiceWorker();
 
 self.addEventListener('fetch', (event) => {
-  if (event.request.url.includes('/~/service/')) {
+  // Use UV's built-in route checker
+  if (uv.route(event)) {
     event.respondWith(
       (async () => {
         try {

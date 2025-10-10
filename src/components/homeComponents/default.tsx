@@ -108,6 +108,11 @@ const DefaultHome = () => {
     );
   };
   const handleSearch = (p?: string, isPhrase = false) => {
+    // Don't allow search if proxy is broken
+    if (showProxyError) {
+      return;
+    }
+    
     setShowProxyError(false); // Reset error state
     
     if (p && canParse(p)) {
@@ -118,81 +123,94 @@ const DefaultHome = () => {
       // Use UV's encoding function
       frame.current!.src = getProxiedUrl(p);
       
-      // Check if iframe loads, show error after timeout
-      setTimeout(() => {
-        if (frame.current && !frame.current.contentWindow?.location.href.includes('/~/')) {
-          setShowProxyError(true);
-        }
-      }, 3000);
+      // Check if iframe loads properly
+      checkProxyHealth();
       return;
     }
     if (p && isPhrase) {
       setShouldOpen(true);
       const url = settingStore.searchEngine.url + p;
       frame.current!.src = getProxiedUrl(url);
+      checkProxyHealth();
     } else {
       setShouldOpen(true);
       const url = settingStore.searchEngine.url + term;
       frame.current!.src = getProxiedUrl(url);
+      checkProxyHealth();
     }
-    
-    // Check for proxy errors after a delay
+  };
+
+  const checkProxyHealth = () => {
+    // Check if the proxy is working after 3 seconds
     setTimeout(() => {
+      if (!frame.current) return;
+      
       try {
-        if (frame.current && shouldOpen) {
-          const iframeDoc = frame.current.contentDocument || frame.current.contentWindow?.document;
-          if (!iframeDoc || iframeDoc.readyState === 'loading') {
-            // Still loading, might be working
-          } else if (iframeDoc.body?.textContent?.includes('404') || 
-                     iframeDoc.body?.textContent?.includes('Failed')) {
+        // Try to access iframe content - will throw if cross-origin (good, means proxy working)
+        const iframeDoc = frame.current.contentDocument;
+        
+        if (iframeDoc) {
+          // We can access the document, check if it's an error page
+          const bodyText = iframeDoc.body?.textContent || '';
+          if (bodyText.includes('Error processing your request') || 
+              bodyText.includes('Failed to load') ||
+              bodyText.includes('Invalid URL') ||
+              bodyText.includes('404')) {
+            console.error('[UV] Proxy error detected in iframe content');
             setShowProxyError(true);
           }
         }
       } catch (e) {
-        // Cross-origin error is expected, proxy might be working
-        console.log('[proxy-check] Cross-origin (expected)');
+        // Cross-origin error is GOOD - means proxy is working and loaded external site
+        console.log('[UV] Cross-origin (proxy working)');
       }
-    }, 5000);
+    }, 3000);
   };
 
   return (
     <>
-      {showProxyError && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-background/95 backdrop-blur-sm">
-          <div className="max-w-2xl mx-auto p-8">
-            <div className="bg-card/80 backdrop-blur-xl border border-border/30 rounded-2xl p-8 shadow-2xl">
-              <div className="text-center space-y-6">
-                <div className="text-6xl mb-4">😅</div>
-                <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-orange-500">
-                  Oops!
-                </h1>
-                <p className="text-xl text-muted-foreground">
-                  Damn it i broke thundr again, you can use this link for now, ill fix it later lol
-                </p>
-                <div className="flex flex-col gap-4 mt-8">
-                  <a
-                    href="https://so-tuff.teamgaming.pw/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-8 py-4 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full font-semibold text-lg transition-all hover:scale-105 shadow-lg"
-                  >
-                    Use Backup Site →
-                  </a>
-                  <button
-                    onClick={() => {
-                      setShowProxyError(false);
-                      setShouldOpen(false);
-                    }}
-                    className="px-8 py-3 bg-muted hover:bg-muted/80 rounded-full font-medium transition-all"
-                  >
-                    Go Back
-                  </button>
+      <AnimatePresence>
+        {showProxyError && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-background/98 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="max-w-2xl mx-auto p-8"
+            >
+              <div className="bg-card/80 backdrop-blur-xl border border-border/30 rounded-2xl p-8 shadow-2xl">
+                <div className="text-center space-y-6">
+                  <div className="text-6xl mb-4">😅</div>
+                  <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-orange-500">
+                    Oops!
+                  </h1>
+                  <p className="text-xl text-muted-foreground">
+                    Damn it i broke thundr again, you can use this link for now, ill fix it later lol
+                  </p>
+                  <div className="flex flex-col gap-4 mt-8">
+                    <a
+                      href="https://so-tuff.teamgaming.pw/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-8 py-4 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full font-semibold text-lg transition-all hover:scale-105 shadow-lg"
+                    >
+                      Use Backup Site →
+                    </a>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-4">
+                    This site can't be used until UV is fixed. Please use the backup site.
+                  </p>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       
       <AnimatePresence>
         {openSearch && (
