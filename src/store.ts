@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 
 interface SettingValues {
   version: string;
-  proxy: "uv" | "scramjet";
+  proxy: "uv";
   transport: {
     path: "/libcurl/index.mjs" | "/epoxy/index.mjs";
     name: "libcurl" | "epoxy";
@@ -22,7 +22,7 @@ interface SettingValues {
 
 interface SettingSetters {
   setVersion: (version: string) => void;
-  setProxy: (proxy: "uv" | "scramjet") => void;
+  setProxy: (proxy: "uv") => void;
   setTransport: (
     path: "/libcurl/index.mjs" | "/epoxy/index.mjs",
     name: "libcurl" | "epoxy"
@@ -91,7 +91,7 @@ const useSettings = create<SettingsStore>()(
       // Public WISP server (like UV-Static-2.0 uses)
       wispUrl: "wss://wisp.mercurywork.shop/",
       setWispUrl: (wispUrl: string) => set(() => ({ wispUrl })),
-      setProxy: (proxy: "uv" | "scramjet") => set(() => ({ proxy })),
+      setProxy: (proxy: "uv") => set(() => ({ proxy })),
       setSearchEngine: (name: string, url: string) =>
         set(() => ({
           searchEngine: {

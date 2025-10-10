@@ -57,6 +57,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [showSupportAlert, setShowSupportAlert] = useState(false);
   const [showUpdateAlert, setShowUpdateAlert] = useState(false);
+  const [updateCountdown, setUpdateCountdown] = useState(7);
   
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
@@ -86,6 +87,16 @@ function Home() {
     }
   }, []);
 
+  // Countdown timer for update alert - button disabled for 7 seconds
+  useEffect(() => {
+    if (showUpdateAlert && updateCountdown > 0) {
+      const timer = setTimeout(() => {
+        setUpdateCountdown(updateCountdown - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [showUpdateAlert, updateCountdown]);
+
   // Analytics & meta
   useEffect(() => {
     ReactGA.initialize("G-PBTEBTLRLZ");
@@ -108,16 +119,23 @@ function Home() {
             <AlertDialogTitle>✨ Thundr Got an Update!</AlertDialogTitle>
             <AlertDialogDescription>
               sorry bout that ass update but now it lowk looks fire so yea
+              {updateCountdown > 0 && (
+                <div className="mt-3 text-center font-semibold text-primary">
+                  Please read... {updateCountdown} second{updateCountdown !== 1 ? 's' : ''}
+                </div>
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
               <AlertDialogAction
+                disabled={updateCountdown > 0}
                 onClick={() => {
                   localStorage.setItem("thundr:updateSeen:v3", "true");
                   setShowUpdateAlert(false);
+                  setUpdateCountdown(7);
                 }}
               >
-                Got it!
+                {updateCountdown > 0 ? `Wait ${updateCountdown}s` : 'Got it!'}
               </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -497,38 +497,13 @@ const SettingsPage = () => {
                         <span className="h-6 w-6 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
                           1
                         </span>
-                        Choose your <Obfuscate text="Proxy" />
+                        Current <Obfuscate text="Proxy" />
                       </h3>
-                      <Select
-                        value={settingsStore.proxy}
-                        onValueChange={(value) => {
-                          settingsStore.setProxy(value as "uv" | "scramjet");
-                          toast.success(`${value} selected`);
-                        }}
-                      >
-                        <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Select value" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="uv">
-                            <div className="flex items-center gap-2">
-                              <span>
-                                <Obfuscate text="Ultraviolet" />
-                              </span>
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="scramjet">
-                            <div className="flex items-center gap-2">
-                              <span>
-                                <Obfuscate text="Scramjet" />
-                              </span>
-                            </div>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <div className="w-[180px] rounded-2xl bg-card/50 border border-primary/10 px-3 py-2 text-center">
+                        <Obfuscate text="Ultraviolet (UV)" />
+                      </div>
                       <p className="text-sm text-muted-foreground mt-2 ml-8">
-                        The <Obfuscate text="proxy" /> you want to use for web
-                        browsing
+                        Using <Obfuscate text="Ultraviolet proxy" /> for web browsing
                       </p>
                     </div>
 
@@ -662,11 +637,8 @@ const SettingsPage = () => {
                         Created with ❤️ by illusions
                       </div>
                       <data className="text-sm text-muted-foreground">
-                        This project uses <Obfuscate text="Scramjet" /> created
-                        by mercury workshop, join their{" "}
-                        <a href="https://discord.gg/88CapFYSEd">
-                          <Obfuscate text="Discord here" />
-                        </a>
+                        This project uses <Obfuscate text="Ultraviolet" /> created
+                        by Titanium Network and <Obfuscate text="BareMux/WISP" /> by Mercury Workshop
                       </data>
                     </div>
                   </CardContent>

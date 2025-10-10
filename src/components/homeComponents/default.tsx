@@ -528,31 +528,9 @@ const DefaultHome = () => {
                 <Separator className="my-2 bg-primary/10" />
                 <div className="flex justify-between px-4 items-center">
                   <h3 className="text-xl font-medium">Current proxy</h3>
-                  <Select
-                    onValueChange={(e) =>
-                      settingStore.setProxy(e as "uv" | "scramjet")
-                    }
-                  >
-                    <SelectTrigger className="w-[40%] rounded-2xl bg-card/50 border-primary/10 hover:border-primary/30 transition-colors">
-                      <SelectValue placeholder={`${settingStore.proxy}`} />
-                    </SelectTrigger>
-                    <SelectContent className="rounded-2xl bg-card/90 backdrop-blur-xl border-primary/10">
-                      <SelectItem
-                        className="rounded-2xl"
-                        value="uv"
-                        disabled={settingStore.proxy === "uv"}
-                      >
-                        Ultraviolet
-                      </SelectItem>
-                      <SelectItem
-                        value="scramjet"
-                        className="rounded-xl hover:bg-primary/5 transition-colors cursor-pointer"
-                        disabled={settingStore.proxy === "scramjet"}
-                      >
-                        Scramjet (BETA)
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="w-[40%] rounded-2xl bg-card/50 border border-primary/10 px-3 py-2 text-center">
+                    Ultraviolet (UV)
+                  </div>
                 </div>
                 <div className="flex justify-between px-4 items-center">
                   <h3 className="text-xl font-medium">Transport</h3>
