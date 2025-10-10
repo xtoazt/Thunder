@@ -37,6 +37,7 @@ import {
 } from "../ui/select";
 import { Obfuscate } from "../obf";
 import { VERSION } from "@/constants";
+import { getProxiedUrl } from "@/lib/uvUtils";
 interface Tab {
   id: string;
   title: string;
@@ -680,7 +681,7 @@ const TabbedHome = () => {
 
       const activeTabId = updatedTabs[activeTabIndex].id;
       if (iframeRefs.current[activeTabId]) {
-        iframeRefs.current[activeTabId]!.src = `/~/service/${bookmark.url}`;
+        iframeRefs.current[activeTabId]!.src = getProxiedUrl(bookmark.url);
       }
     }
   };
@@ -1043,8 +1044,8 @@ const TabbedHome = () => {
 
       const activeTabId = updatedTabs[activeTabIndex].id;
       if (iframeRefs.current[activeTabId]) {
-        // Use /~/service/ path for UV - simpler and works with UV's routing
-        iframeRefs.current[activeTabId]!.src = `/~/service/${processedUrl}`;
+        // Use UV's encoding function
+        iframeRefs.current[activeTabId]!.src = getProxiedUrl(processedUrl);
         
         // Check for proxy errors after a delay
         setTimeout(() => {
@@ -1270,7 +1271,7 @@ const TabbedHome = () => {
                   ref={(el) => {
                     if (el) iframeRefs.current[tab.id] = el;
                   }}
-                  src={tab.url ? `/~/service/${tab.url}` : ""}
+                  src={tab.url ? getProxiedUrl(tab.url) : ""}
                   className="w-full h-full border-0"
                   sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-presentation allow-top-navigation-by-user-activation"
                   title={tab.title}

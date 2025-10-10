@@ -12,6 +12,7 @@ import {
 import { Route } from "@/routes/index";
 import { useMeta } from "../hooks/useMeta";
 import { AnimatePresence, motion } from "framer-motion";
+import { getProxiedUrl } from "@/lib/uvUtils";
 import GridPattern from "../ui/grid-pattern";
 import PopularSites from "../../sites.json";
 
@@ -114,8 +115,8 @@ const DefaultHome = () => {
         p = "https://" + p;
       }
       setShouldOpen(true);
-      // Use standard encoding - UV service worker will handle it
-      frame.current!.src = `/~/service/${p}`;
+      // Use UV's encoding function
+      frame.current!.src = getProxiedUrl(p);
       
       // Check if iframe loads, show error after timeout
       setTimeout(() => {
@@ -128,11 +129,11 @@ const DefaultHome = () => {
     if (p && isPhrase) {
       setShouldOpen(true);
       const url = settingStore.searchEngine.url + p;
-      frame.current!.src = `/~/service/${url}`;
+      frame.current!.src = getProxiedUrl(url);
     } else {
       setShouldOpen(true);
       const url = settingStore.searchEngine.url + term;
-      frame.current!.src = `/~/service/${url}`;
+      frame.current!.src = getProxiedUrl(url);
     }
     
     // Check for proxy errors after a delay
